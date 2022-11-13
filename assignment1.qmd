@@ -203,6 +203,25 @@ knitr::kable(df[upper_outlier_ind, ],caption = "Companies Making Difference")
 
 ```
 
+####Companies which invested in different stages
+```{r}
+Stage <- data %>% group_by(Company,Stage) %>%
+  summarise(Investment_Count = n(),
+  TotalDealValue=sum(DealValue)          
+  )
+
+Stage_v2 <- Stage %>% group_by(Company) %>%
+  summarise(StageCount = n())
+
+filter(Stage_v2,StageCount>1)
+
+Morethanonestage <-data %>%
+                    select(Company,Sector,DealValue,Date,Stage) %>%
+                    filter(Company == "Getir" | Company == "Servislet") 
+
+knitr::kable(Morethanonestage,caption = "Companies which invested in different stages")
+```
+
 #### Investors 
 
 **Investor Numbers by Sectors**
@@ -292,4 +311,11 @@ ggplot(data=df1, aes(x=Month, y=Total, group=1)) +
   geom_point() +
   ylim(0,100) +
   ggtitle("Number of Investments Monthly - 2021")
+```
+
+#We can say that Non-financial investors mostly invested in Acquisiton Stage
+
+```{r warning=FALSE}
+  ggplot(data,aes(x = Stage, y=Sector, fill = Financial)) +
+    geom_dotplot(binaxis = "y", stackdir = "center")
 ```

@@ -1,12 +1,295 @@
 ---
-title: "Assignment 1"
+title: "STARTUPS 2021"
 date: "2022-10-01"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-float: true
+    code-fold: true
+    code-summary: "Show the code"
+    number-sections: false
+
 ---
 
-This is a template example qmd output page. You may see an example R code below.
+
+<style>
+    body { 
+    font-family: Calibri;
+    text-align: justify;
+    font-size: 11pt;
+    div.hidecode + pre {display: none}
+    }
+</style>
+
+<div class="hidecode">
+```{r setup, output=FALSE,echo=FALSE,warning = FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+Sys.setlocale(locale = "en_US.UTF-8")
+options(dplyr.summarise.inform = FALSE)
+```
+</div>
+
+In this report, we will explore the data set of  start-ups getting investments from a variety of domestic and international investors. Data is gathered from **KPMG** and **212**’s [Turkish Startup Investments Review 2021 report](https://assets.kpmg/content/dam/kpmg/tr/pdf/2022/03/turkish-startup-investments-review-2021.pdf).
+
+## KEY TAKEAWAYS OF THE REPORT 
+
+1. In the seed stage, gaming sector has the lead, in the acquistion sector, SaaS is the leader sector
+2. Gaming is winner of number of investment category, but if we look at total deals Ecommerce Enabler sector is winner. This is possibly due to the trendyol,hepsiburada investments which are outliers of this category. Delivery & Logistic sector is also ahead of Gaming, this is also due to the getir, which is also a outlier in terms of deal amount.
+3. Gaming sector has the highest number of investors
+4. Agritech sector is the most multi-cultural sector in terms of different number of investor origins in one deal
+5. Most of the investments made in December and August, and the most quite months are May and October, as quarters, number of total investments are increasing in Q3,Q4 if we compare Q1 and Q2.
+6. Fintech startups' 73% of investments coming from Financial Investors. Interestingly, 86% of Delivery & Logistics investments and 78% of Healthtech investments coming from Financial Investors which are greater than Fintech.
+
+
+
+### DATA PREPROCESSING 
+Install necessary packages
+```{r install_packages, eval=FALSE}
+install.packages("readxl")
+```
+
+Call necessary libraries
+```{r call_libraries, message = FALSE}
+library(readxl)
+library(lubridate)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+```
+
+Load the data
+
+```{r load_data, message = FALSE}
+data = read_excel("data//startup_deals_2021.xlsx")
+```
+
+Rename the column names
+```{r preprocess_rename, message = FALSE}
+
+data <- data %>% 
+  rename(Stage = 'Investment Stage',
+         Company = 'Target Company',
+         DealValue = 'Deal Value (USD)',
+         Financial = 'Financial Investor',
+         Date = 'Announcement Date',
+         Origin ="Investor's Origin",
+         Stake = "Stake (%)"
+  )
+colnames(data)
+```
+
+* Convert "Deal Value (USD)" type to numeric data
+* Convert Date column to date type, and drop year 2021, since all date values have same year, 2021
+* Drop % sign for Stake, and convert to numeric data type
+
+```{r preprocess_convert, message = FALSE}
+options(scipen=999)
+data$DealValue <- suppressWarnings(as.numeric(data$DealValue))
+
+data$Date <- my(data$Date)
+
+
+data <- data %>% 
+  mutate(Stake = str_replace_all(Stake, "%", ""))
+data$Stake <- suppressWarnings(as.numeric(data$Stake))
+sapply(data, class)
+
+```
+
+Sector feature has inconsistent values like Diğital Comparison, Artificial intelligence, Cybersec urity, Telecpm, Artificial Intelligence, B lockchain.
+
+```{r inconsistent, message = FALSE}
+data_incons <- data %>%
+  filter(Sector %in% c('Diğital Comparison',
+'Artificial intelligence',
+'Cybersec urity',
+'Telecpm',
+'Artificial Intelligence',
+'B lockchain'
+))
+unique(data_incons$Sector)
+```
+
+Inconsistent Sector values are updated with the right values.
+```{r}
+data$Sector[data$Sector == 'Artificial intelligence'] <- 'Artificial Intelligence'
+data$Sector[data$Sector == 'Telecpm'] <- 'Telecom'
+data$Sector[data$Sector == 'B lockchain'] <- 'Blockchain'
+data$Sector[data$Sector == 'Diğital '] <- 'Dijital'
+data$Sector[data$Sector == 'Cybersec urity '] <- 'Cybersecurity'
+data$Sector[data$Sector == 'Ecommerce enabler'] <- 'Ecommerce Enabler'
+data$sector[data$Sector == 'I mage process'] <- 'Image process'
+```
+
+Now the data is ready for the EDA,
+```{r }
+knitr::kable(head(data))
+
+```
+
+### EXPLORATORY DATA ANALYSIS
+
+#### First 3 Sectors of each Stage: Gaming is a good start!
+
+```{r key_point1, message = FALSE, warning = FALSE}
+sector_stage <- data %>%
+  group_by(Stage,Sector) %>%
+  summarise(Total = n()) %>% 
+  arrange(desc(Total)) %>%
+  slice_max(Total,n=3)
+knitr::kable(sector_stage)
+
+```
+
+```{r }
+ggplot(data=sector_stage, aes(x=Stage, y=Total, fill=factor(Sector))) +
+  geom_bar(position="dodge",stat="identity") + 
+  ggtitle("Investment Stage and Investment Sectors")
+
+```
+#### Deal Amounts: A General Look
+```{r, warning = FALSE}
+
+df1 <-  data %>%
+  mutate(TotalDeal = sum(DealValue,na.rm = TRUE))
+
+ 
+df2 <- df1 %>%
+  group_by(Sector) %>%
+  summarise(RateOfDeal=(sum(DealValue,na.rm = TRUE)/TotalDeal)*100) %>%
+  arrange(desc(RateOfDeal)) 
+  
+
+knitr::kable(head(unique(df2)))
+```
+```{r}
+df3 <- df2 %>% filter(RateOfDeal>1)
+df3 <- unique(df3)
+ggplot(df3, aes(x="Sector", y=RateOfDeal, fill=Sector))+
+geom_bar(width = 1, stat = "identity") +
+  ggtitle("Deal(USD) Rates of Sectors (greater than 1%)")
+```
+
+
+
+#### Deal Amounts: Who makes the difference?
+
 
 ```{r}
-set.seed(1)
-vec1 <- sample(LETTERS,5)
-paste0(vec1,collapse="")
+df <-  data %>%
+  group_by(Company,Sector) %>%
+  summarise(Total=n(),TotalDealValue=sum(DealValue))  %>%
+  arrange(desc(TotalDealValue))
+
+ggplot(df) +
+  aes(x = "", y = log(TotalDealValue)) +
+  geom_boxplot(fill = "#0c4c8a") +
+  theme_minimal()
+
+```
+
+**Which companies make the difference?**
+
+```{r}
+
+lower_bound <- quantile(df$TotalDealValue, 0.01,na.rm = TRUE)
+upper_bound <- quantile(df$TotalDealValue, 0.99,na.rm = TRUE)
+
+upper_outlier_ind <- which(df$TotalDealValue > upper_bound)
+
+
+knitr::kable(df[upper_outlier_ind, ],caption = "Companies Making Difference")
+
+```
+
+#### Investors 
+
+**Investor Numbers by Sectors**
+
+```{r}
+data_investor <- mutate(data,
+       investor_number = sapply(strsplit(as.character(data$Investor), ","), length))
+
+investor_gg <- data_investor %>%
+  group_by(Sector) %>%
+  summarise(TotalNumberInvestor=sum(investor_number))  %>%
+  arrange(desc(TotalNumberInvestor)) %>%
+  slice_max(TotalNumberInvestor,n=10)
+
+ggplot(data=investor_gg, aes(x=Sector, y=TotalNumberInvestor)) +
+  geom_bar(position="dodge",stat="identity") + 
+  ggtitle("Number of Investors by Sectors") +
+  theme(axis.text.x = element_text(angle = 90))
+
+```
+
+**Investor Numbers by Origins : Most Multi-cultural Sector : Agritech **
+
+```{r, warning = FALSE}
+
+data_inv_origin <- mutate(data,
+       origin_number = sapply(strsplit(as.character(data$Origin), ","), length)) 
+
+inv_or_sec <- data_inv_origin %>%
+  group_by(Sector) %>%
+  summarise(MaxOriginNumber = max(origin_number),MeanOriginNumber = mean(origin_number)) %>%
+  filter(MaxOriginNumber>1) %>%
+  arrange(desc(MaxOriginNumber)) %>%
+  top_n(5)
+
+ 
+knitr::kable(inv_or_sec)
+```
+
+**Investors: Financial or Non-Financial?**
+
+```{r}
+
+df1 <- data %>%
+  group_by(Sector) %>%
+  summarise(
+    Total = n(),
+    Financial = sum(Financial == "Yes")
+  ) %>%
+  mutate(FinancialInvestorPercentage =(Financial/Total)*100 ) %>%
+  filter(Total>1) %>%
+  arrange(desc(Financial),desc(FinancialInvestorPercentage))
+
+knitr::kable(head(df1,10))
+```
+
+
+#### When the investments take place most? 
+
+
+
+```{r warning=FALSE}
+df <-  data %>%
+  mutate(Month = month(data$Date, label=TRUE)) %>%
+  mutate(Quarter = paste("2021 Q", quarter(data$Date)))  %>%
+  group_by(Quarter) %>%
+  summarise(Total=n())%>%
+  arrange(Quarter) 
+
+ggplot(data=df, aes(x=Quarter, y=Total, group=1)) +
+  geom_line()+
+  geom_point() +
+  ylim(0,100) +
+  ggtitle("Number of Investments Quarters - 2021")
+
+
+```
+```{r warning=FALSE}
+df1 <-  data %>%
+  mutate(Month = month(data$Date, label=TRUE)) %>%
+  group_by(Month) %>%
+  summarise(Total=n())%>%
+  arrange(Month) 
+
+ggplot(data=df1, aes(x=Month, y=Total, group=1)) +
+  geom_line()+
+  geom_point() +
+  ylim(0,100) +
+  ggtitle("Number of Investments Monthly - 2021")
 ```

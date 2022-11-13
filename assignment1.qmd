@@ -208,7 +208,7 @@ knitr::kable(df[upper_outlier_ind, ],caption = "Companies Making Difference")
 
 ```
 
-####Companies which invested in different stages
+####Companies which were invested in different stages
 ```{r}
 Stage <- data %>% group_by(Company,Stage) %>%
   summarise(Investment_Count = n(),

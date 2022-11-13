@@ -1,6 +1,6 @@
 ---
 title: "STARTUPS 2021"
-date: "2022-10-01"
+date: "13 November 2022"
 format:
   html:
     toc: true

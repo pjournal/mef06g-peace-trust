@@ -1,6 +1,6 @@
 ---
 title: "STARTUPS 2021"
-date: "2022-10-01"
+date: "2022-11-13"
 format:
   html:
     toc: true
@@ -77,6 +77,11 @@ data <- data %>%
          Stake = "Stake (%)"
   )
 colnames(data)
+```
+
+```{r}
+data$Sector[data$Sector == 'Ecommerce enabler'] <- 'Ecommerce Enabler'
+data$Sector[data$Sector == 'Data analytics'] <- 'Data Analytics'
 ```
 
 * Convert "Deal Value (USD)" type to numeric data

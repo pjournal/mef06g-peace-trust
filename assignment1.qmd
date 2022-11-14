@@ -40,6 +40,7 @@ In this report, we will explore the data set of  start-ups getting investments f
 4. Agritech sector is the most multi-cultural sector in terms of different number of investor origins in one deal
 5. Most of the investments made in December and August, and the most quite months are May and October, as quarters, number of total investments are increasing in Q3,Q4 if we compare Q1 and Q2.
 6. Fintech startups' 73% of investments coming from Financial Investors. Interestingly, 86% of Delivery & Logistics investments and 78% of Healthtech investments coming from Financial Investors which are greater than Fintech.
+7. Acquisition Stage has been mostly invested by Non-financial investors.
 
 
 
@@ -77,11 +78,6 @@ data <- data %>%
          Stake = "Stake (%)"
   )
 colnames(data)
-```
-
-```{r}
-data$Sector[data$Sector == 'Ecommerce enabler'] <- 'Ecommerce Enabler'
-data$Sector[data$Sector == 'Data analytics'] <- 'Data Analytics'
 ```
 
 * Convert "Deal Value (USD)" type to numeric data
@@ -125,12 +121,13 @@ data$Sector[data$Sector == 'Diğital '] <- 'Dijital'
 data$Sector[data$Sector == 'Cybersec urity '] <- 'Cybersecurity'
 data$Sector[data$Sector == 'Ecommerce enabler'] <- 'Ecommerce Enabler'
 data$sector[data$Sector == 'I mage process'] <- 'Image process'
+data$Sector[data$Sector == 'Ecommerce enabler'] <- 'Ecommerce Enabler'
+data$Sector[data$Sector == 'Data analytics'] <- 'Data Analytics'
 ```
 
 Now the data is ready for the EDA,
 ```{r }
 knitr::kable(head(data))
-
 ```
 
 ### EXPLORATORY DATA ANALYSIS
@@ -318,9 +315,10 @@ ggplot(data=df1, aes(x=Month, y=Total, group=1)) +
   ggtitle("Number of Investments Monthly - 2021")
 ```
 
-#We can say that Non-financial investors mostly invested in Acquisiton Stage
+#We can say that Acquisition Stage has been mostly invested by Non-financial investors.
 
 ```{r warning=FALSE}
   ggplot(data,aes(x = Stage, y=Sector, fill = Financial)) +
-    geom_dotplot(binaxis = "y", stackdir = "center")
+    geom_dotplot(binaxis = "y", stackdir = "center",
+                 dotsize=1,binwidth = 1)
 ```

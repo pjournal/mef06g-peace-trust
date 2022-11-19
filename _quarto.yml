@@ -1,6 +1,7 @@
 project:
   type: book
   output-dir: docs
+    
 
 book:
   title: "Peace and Trust Progress Journal"
@@ -8,6 +9,7 @@ book:
   chapters:
     - index.qmd
     - assignment1.qmd
+    - project/agriculture.qmd
   page-footer: 
     center: "[MEF BDA 503](https://mef-bda503.github.io)" 
   sharing: [twitter, facebook]

@@ -8,12 +8,14 @@ Each section is an assignment or an individual work.
 
 <!-- IF THIS IS A GROUP UNCOMMENT BELOW -->
 
-<!-- # Group Members
+# Group Members
 
-+ [Member 1](Member 1's Progress Journal URL with https://)  
-+ [Member 2](Member 2's Progress Journal URL with https://)
-+ [Member 3](Member 3's Progress Journal URL with https://)
++ [Yudum Paçin](https://pjournal.github.io/mef06-yudumpacin/)  
++ [Fazlı Mengü Aydın](https://pjournal.github.io/mef06-thisismengu/)
++ [Muhammed Ali Gökmen](https://pjournal.github.io/mef06-ali-gokmen/)
++ [Sabri Demirdal](https://pjournal.github.io/mef06-aktas8154/)
++ [Gizem Erdoğan](https://pjournal.github.io/mef06-erdogang90/)
 
 # Group Project Details
 
-Our group project is [PROJECT NAME]. [SHORT DESCRIPTION] -->
+Our group project is **Agriculture in Turkey** - Agriculture in Turkey based on TUIK data 

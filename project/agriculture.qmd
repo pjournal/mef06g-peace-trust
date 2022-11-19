@@ -1,0 +1,51 @@
+---
+title: "Group Project: Agriculture in Turkey"
+date: "19 November 2022"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-float: true
+    code-fold: true
+    code-summary: "Code"
+    number-sections: false
+---
+<style>
+    body { 
+    font-family: Calibri;
+    text-align: justify;
+    font-size: 11pt;
+    div.hidecode + pre {display: none}
+    }
+</style>
+
+<div class="hidecode">
+```{r setup, output=FALSE,echo=FALSE,warning = FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+Sys.setlocale(locale = "en_US.UTF-8")
+options(dplyr.summarise.inform = FALSE)
+```
+</div>
+
+## DATA DESCRIPTION
+
+## PREPROCESS
+
+Call necessary libraries
+```{r call_libraries, warning=  FALSE,  message = FALSE}
+#install.packages("readxl")
+library(readxl)
+library(lubridate)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+```
+Load the TUIK data sets
+
+```{r load_data, warning = FALSE}
+tarım = read_excel("data//tarım.xlsx")
+tahıl = read_excel("data//tahıl.xlsx")
+sebze = read_excel("data//sebze.xlsx")
+meyve = read_excel("data//meyve.xlsx")
+```
+

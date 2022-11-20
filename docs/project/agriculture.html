@@ -262,10 +262,22 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tarım <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tarım.xlsx"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tahıl <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tahıl.xlsx"</span>)</span>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tarim <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tarım.xlsx"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tahil <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tahıl.xlsx"</span>)</span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sebze <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//sebze.xlsx"</span>)</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>meyve <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//meyve.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<p>Fixing the column names</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"province"</span>,<span class="st">"year"</span>,<span class="st">"decare"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tarim) <span class="ot">&lt;-</span> new_cols</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"vegetable_type"</span>,<span class="st">"province"</span>,<span class="st">"year"</span>,<span class="st">"production"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sebze) <span class="ot">&lt;-</span> new_cols</span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"grain_type"</span>,<span class="st">"province"</span>,<span class="st">"year"</span>,<span class="st">"production"</span>)</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tahil) <span class="ot">&lt;-</span> new_cols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 

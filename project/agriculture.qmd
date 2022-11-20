@@ -40,12 +40,23 @@ library(dplyr)
 library(tidyverse)
 library(ggplot2)
 ```
+
 Load the TUIK data sets
 
 ```{r load_data, warning = FALSE}
-tarım = read_excel("data//tarım.xlsx")
-tahıl = read_excel("data//tahıl.xlsx")
+tarim = read_excel("data//tarım.xlsx")
+tahil = read_excel("data//tahıl.xlsx")
 sebze = read_excel("data//sebze.xlsx")
 meyve = read_excel("data//meyve.xlsx")
 ```
 
+Fixing the column names
+
+```{r fixing_column_names, warning = FALSE}
+new_cols <- c("province","year","decare")
+colnames(tarim) <- new_cols
+new_cols <- c("vegetable_type","province","year","production")
+colnames(sebze) <- new_cols
+new_cols <- c("grain_type","province","year","production")
+colnames(tahil) <- new_cols
+```

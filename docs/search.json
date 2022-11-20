@@ -32,6 +32,6 @@
     "href": "project/agriculture.html#preprocess",
     "title": "2  Group Project: Agriculture in Turkey",
     "section": "PREPROCESS",
-    "text": "PREPROCESS\nCall necessary libraries\n\n\nCode\n#install.packages(\"readxl\")\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(dplyr)\nlibrary(tidyverse)\nlibrary(ggplot2)\n\n\nLoad the TUIK data sets\n\n\nCode\ntarım = read_excel(\"data//tarım.xlsx\")\ntahıl = read_excel(\"data//tahıl.xlsx\")\nsebze = read_excel(\"data//sebze.xlsx\")\nmeyve = read_excel(\"data//meyve.xlsx\")"
+    "text": "PREPROCESS\nCall necessary libraries\n\n\nCode\n#install.packages(\"readxl\")\nlibrary(readxl)\nlibrary(lubridate)\nlibrary(dplyr)\nlibrary(tidyverse)\nlibrary(ggplot2)\n\n\nLoad the TUIK data sets\n\n\nCode\ntarim = read_excel(\"data//tarım.xlsx\")\ntahil = read_excel(\"data//tahıl.xlsx\")\nsebze = read_excel(\"data//sebze.xlsx\")\nmeyve = read_excel(\"data//meyve.xlsx\")\n\n\nFixing the column names\n\n\nCode\nnew_cols <- c(\"province\",\"year\",\"decare\")\ncolnames(tarim) <- new_cols\nnew_cols <- c(\"vegetable_type\",\"province\",\"year\",\"production\")\ncolnames(sebze) <- new_cols\nnew_cols <- c(\"grain_type\",\"province\",\"year\",\"production\")\ncolnames(tahil) <- new_cols"
   }
 ]

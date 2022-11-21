@@ -44,19 +44,54 @@ library(ggplot2)
 Load the TUIK data sets
 
 ```{r load_data, warning = FALSE}
-tarim = read_excel("data//tarım.xlsx")
-tahil = read_excel("data//tahıl.xlsx")
-sebze = read_excel("data//sebze.xlsx")
-meyve = read_excel("data//meyve.xlsx")
+tarim_raw = read_excel("data//tarım.xlsx")
+tahil_raw = read_excel("data//tahıl.xlsx")
+sebze_raw = read_excel("data//sebze.xlsx")
+meyve_raw = read_excel("data//meyve.xlsx")
 ```
 
 Fixing the column names
 
 ```{r fixing_column_names, warning = FALSE}
 new_cols <- c("province","year","decare")
-colnames(tarim) <- new_cols
+colnames(tarim_raw) <- new_cols
 new_cols <- c("vegetable_type","province","year","production")
-colnames(sebze) <- new_cols
+colnames(sebze_raw) <- new_cols
 new_cols <- c("grain_type","province","year","production")
-colnames(tahil) <- new_cols
+colnames(tahil_raw) <- new_cols
 ```
+
+Seperating Column
+
+```{r}
+tahil_v1 <- separate(data = tahil_raw, col = grain_type, into = c("main_type", "product_type"), sep = "ve")
+
+tahil <- separate(data = tahil_v1, col = product_type, into = c("product_type", "unit"), sep = "-")
+
+sebze_v1 <- separate(data = sebze_raw, col = vegetable_type, into = c("main_type", "product_type"), sep = "ve")
+
+sebze <- separate(data = sebze_v1, col = product_type, into = c("product_type", "unit"), sep = "-")
+
+meyve_v1 <- separate(data = meyve_raw, col = Tür, into = c("main_type", "product_type"), sep = " ve ")
+
+meyve <- separate(data = meyve_v1, col = product_type, into = c("product_type", "unit"), sep = "-")
+
+```
+
+```{r}
+head(tarim_raw)
+```
+
+```{r}
+head(tahil)
+```
+
+```{r}
+head(sebze)
+```
+
+```{r}
+head(meyve)
+```
+
+

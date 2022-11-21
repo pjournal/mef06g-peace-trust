@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -262,10 +262,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tarim <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tarım.xlsx"</span>)</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tahil <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tahıl.xlsx"</span>)</span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sebze <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//sebze.xlsx"</span>)</span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>meyve <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//meyve.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>tarim_raw <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tarım.xlsx"</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tahil_raw <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//tahıl.xlsx"</span>)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>sebze_raw <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//sebze.xlsx"</span>)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>meyve_raw <span class="ot">=</span> <span class="fu">read_excel</span>(<span class="st">"data//meyve.xlsx"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <p>Fixing the column names</p>
@@ -273,12 +273,106 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"province"</span>,<span class="st">"year"</span>,<span class="st">"decare"</span>)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tarim) <span class="ot">&lt;-</span> new_cols</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tarim_raw) <span class="ot">&lt;-</span> new_cols</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"vegetable_type"</span>,<span class="st">"province"</span>,<span class="st">"year"</span>,<span class="st">"production"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sebze) <span class="ot">&lt;-</span> new_cols</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(sebze_raw) <span class="ot">&lt;-</span> new_cols</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>new_cols <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"grain_type"</span>,<span class="st">"province"</span>,<span class="st">"year"</span>,<span class="st">"production"</span>)</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tahil) <span class="ot">&lt;-</span> new_cols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="fu">colnames</span>(tahil_raw) <span class="ot">&lt;-</span> new_cols</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
+</div>
+<p>Seperating Column</p>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tahil_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> tahil_raw, <span class="at">col =</span> grain_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">"ve"</span>)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tahil <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> tahil_v1, <span class="at">col =</span> product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_type"</span>, <span class="st">"unit"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sebze_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> sebze_raw, <span class="at">col =</span> vegetable_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">"ve"</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sebze <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> sebze_v1, <span class="at">col =</span> product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_type"</span>, <span class="st">"unit"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>meyve_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> meyve_raw, <span class="at">col =</span> Tür, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">" ve "</span>)</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>meyve <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> meyve_v1, <span class="at">col =</span> product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_type"</span>, <span class="st">"unit"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tarim_raw)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 3
+  province year    decare
+  &lt;chr&gt;    &lt;chr&gt;    &lt;dbl&gt;
+1 Adana-1  2010  5506353 
+2 Adana-1  2011  4962979.
+3 Adana-1  2012  4807968 
+4 Adana-1  2013  4751612.
+5 Adana-1  2014  4982042.
+6 Adana-1  2015  4887150 </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tahil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  main_type      product_type                        unit  provi…¹ year  produ…²
+  &lt;chr&gt;          &lt;chr&gt;                               &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+1 "Ekilen Alan " " 01.11.11.00.00. (Durum Buğdayı) " " De… Adana-1 2010     8508
+2 "Ekilen Alan " " 01.11.12.00.00. (Buğday, Durum B… " De… Adana-1 2010  2167738
+3 "Ekilen Alan " " 01.11.20.00.00. (Mısır) "         " De… Adana-1 2010   860354
+4 "Ekilen Alan " " 01.11.31.00.01. (Arpa (Biralık))… " De… Adana-1 2010       NA
+5 "Ekilen Alan " " 01.11.31.00.02. (Arpa (Diğer)) "  " De… Adana-1 2010    63190
+6 "Ekilen Alan " " 01.11.32.00.00. (Çavdar) "        " De… Adana-1 2010     1042
+# … with abbreviated variable names ¹​province, ²​production</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  main_type      product_type                        unit  provi…¹ year  produ…²
+  &lt;chr&gt;          &lt;chr&gt;                               &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+1 "Ekilen Alan " " 01.11.61.00.01. (Fasulye, Taze) " " De… Adana-1 2010     3640
+2 "Ekilen Alan " " 01.11.61.00.02. (Barbunya, Taze)… " De… Adana-1 2010      600
+3 "Ekilen Alan " " 01.11.62.00.00. (Bezelye, Taze) " " De… Adana-1 2010     5860
+4 "Ekilen Alan " " 01.11.69.00.01. (Börülce, Taze) " " De… Adana-1 2010       55
+5 "Ekilen Alan " " 01.11.69.00.02. (Bakla, Taze) "   " De… Adana-1 2010     3240
+6 "Ekilen Alan " " 01.13.11.00.00. (Kuşkonmaz) "     " De… Adana-1 2010       NA
+# … with abbreviated variable names ¹​province, ²​production</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meyve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 85
+  main_type  produ…¹ unit  Yıl   Adana…² Adıya…³ Afyon…⁴ Aksar…⁵ Amasy…⁶ Ankar…⁷
+  &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 Meyve Ver… "01.21… " Ad… 2010        0       0       0       0       0       0
+2 Meyve Ver… "01.21… " Ad… 2010        0       0       0      NA      NA       0
+3 Meyve Ver… "01.21… " Ad… 2010        0       0      NA      NA       0       0
+4 Meyve Ver… "01.21… " Ad… 2010        0       0       0       0      NA      NA
+5 Meyve Ver… "01.21… " Ad… 2010       NA      NA      NA       0      NA      NA
+6 Meyve Ver… "01.22… " Ad… 2010       NA      NA      NA      NA      NA      NA
+# … with 75 more variables: `Antalya-7` &lt;dbl&gt;, `Ardahan-75` &lt;dbl&gt;,
+#   `Artvin-8` &lt;dbl&gt;, `Aydın-9` &lt;dbl&gt;, `Ağrı-4` &lt;dbl&gt;, `Balıkesir-10` &lt;dbl&gt;,
+#   `Bartın-74` &lt;dbl&gt;, `Batman-72` &lt;dbl&gt;, `Bayburt-69` &lt;dbl&gt;,
+#   `Bilecik-11` &lt;dbl&gt;, `Bingöl-12` &lt;dbl&gt;, `Bitlis-13` &lt;dbl&gt;, `Bolu-14` &lt;dbl&gt;,
+#   `Burdur-15` &lt;dbl&gt;, `Bursa-16` &lt;dbl&gt;, `Denizli-20` &lt;dbl&gt;,
+#   `Diyarbakır-21` &lt;dbl&gt;, `Düzce-81` &lt;dbl&gt;, `Edirne-22` &lt;dbl&gt;,
+#   `Elazığ-23` &lt;dbl&gt;, `Erzincan-24` &lt;dbl&gt;, `Erzurum-25` &lt;dbl&gt;, …</code></pre>
+</div>
 </div>
 
 

@@ -10,6 +10,8 @@ format:
     code-summary: "Code"
     number-sections: false
 ---
+
+```{=html}
 <style>
     body { 
     font-family: Calibri;
@@ -18,20 +20,21 @@ format:
     div.hidecode + pre {display: none}
     }
 </style>
-
-<div class="hidecode">
+```
+::: hidecode
 ```{r setup, output=FALSE,echo=FALSE,warning = FALSE}
 knitr::opts_chunk$set(warning = FALSE)
 Sys.setlocale(locale = "en_US.UTF-8")
 options(dplyr.summarise.inform = FALSE)
 ```
-</div>
+:::
 
 ## DATA DESCRIPTION
 
 ## PREPROCESS
 
 Call necessary libraries
+
 ```{r call_libraries, warning=  FALSE,  message = FALSE}
 #install.packages("readxl")
 library(readxl)
@@ -94,4 +97,6 @@ head(sebze)
 head(meyve)
 ```
 
-
+```{r}
+print("hello world")
+```

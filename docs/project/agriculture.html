@@ -285,11 +285,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tahil_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> tahil_raw, <span class="at">col =</span> grain_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">"ve"</span>)</span>
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>tahil_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> tahil_raw, <span class="at">col =</span> grain_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">" ve "</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>tahil <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> tahil_v1, <span class="at">col =</span> product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_type"</span>, <span class="st">"unit"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sebze_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> sebze_raw, <span class="at">col =</span> vegetable_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">"ve"</span>)</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>sebze_v1 <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> sebze_raw, <span class="at">col =</span> vegetable_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"main_type"</span>, <span class="st">"product_type"</span>), <span class="at">sep =</span> <span class="st">" ve "</span>)</span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>sebze <span class="ot">&lt;-</span> <span class="fu">separate</span>(<span class="at">data =</span> sebze_v1, <span class="at">col =</span> product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_type"</span>, <span class="st">"unit"</span>), <span class="at">sep =</span> <span class="st">"-"</span>)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
@@ -322,14 +322,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
-  main_type      product_type                        unit  provi…¹ year  produ…²
-  &lt;chr&gt;          &lt;chr&gt;                               &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
-1 "Ekilen Alan " " 01.11.11.00.00. (Durum Buğdayı) " " De… Adana-1 2010     8508
-2 "Ekilen Alan " " 01.11.12.00.00. (Buğday, Durum B… " De… Adana-1 2010  2167738
-3 "Ekilen Alan " " 01.11.20.00.00. (Mısır) "         " De… Adana-1 2010   860354
-4 "Ekilen Alan " " 01.11.31.00.01. (Arpa (Biralık))… " De… Adana-1 2010       NA
-5 "Ekilen Alan " " 01.11.31.00.02. (Arpa (Diğer)) "  " De… Adana-1 2010    63190
-6 "Ekilen Alan " " 01.11.32.00.00. (Çavdar) "        " De… Adana-1 2010     1042
+  main_type   product_type                           unit  provi…¹ year  produ…²
+  &lt;chr&gt;       &lt;chr&gt;                                  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+1 Ekilen Alan "01.11.11.00.00. (Durum Buğdayı) "     " De… Adana-1 2010     8508
+2 Ekilen Alan "01.11.12.00.00. (Buğday, Durum Buğda… " De… Adana-1 2010  2167738
+3 Ekilen Alan "01.11.20.00.00. (Mısır) "             " De… Adana-1 2010   860354
+4 Ekilen Alan "01.11.31.00.01. (Arpa (Biralık)) "    " De… Adana-1 2010       NA
+5 Ekilen Alan "01.11.31.00.02. (Arpa (Diğer)) "      " De… Adana-1 2010    63190
+6 Ekilen Alan "01.11.32.00.00. (Çavdar) "            " De… Adana-1 2010     1042
 # … with abbreviated variable names ¹​province, ²​production</code></pre>
 </div>
 </div>
@@ -340,14 +340,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </details>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 6
-  main_type      product_type                        unit  provi…¹ year  produ…²
-  &lt;chr&gt;          &lt;chr&gt;                               &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
-1 "Ekilen Alan " " 01.11.61.00.01. (Fasulye, Taze) " " De… Adana-1 2010     3640
-2 "Ekilen Alan " " 01.11.61.00.02. (Barbunya, Taze)… " De… Adana-1 2010      600
-3 "Ekilen Alan " " 01.11.62.00.00. (Bezelye, Taze) " " De… Adana-1 2010     5860
-4 "Ekilen Alan " " 01.11.69.00.01. (Börülce, Taze) " " De… Adana-1 2010       55
-5 "Ekilen Alan " " 01.11.69.00.02. (Bakla, Taze) "   " De… Adana-1 2010     3240
-6 "Ekilen Alan " " 01.13.11.00.00. (Kuşkonmaz) "     " De… Adana-1 2010       NA
+  main_type   product_type                        unit     provi…¹ year  produ…²
+  &lt;chr&gt;       &lt;chr&gt;                               &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+1 Ekilen Alan "01.11.61.00.01. (Fasulye, Taze) "  " Dekar" Adana-1 2010     3640
+2 Ekilen Alan "01.11.61.00.02. (Barbunya, Taze) " " Dekar" Adana-1 2010      600
+3 Ekilen Alan "01.11.62.00.00. (Bezelye, Taze) "  " Dekar" Adana-1 2010     5860
+4 Ekilen Alan "01.11.69.00.01. (Börülce, Taze) "  " Dekar" Adana-1 2010       55
+5 Ekilen Alan "01.11.69.00.02. (Bakla, Taze) "    " Dekar" Adana-1 2010     3240
+6 Ekilen Alan "01.13.11.00.00. (Kuşkonmaz) "      " Dekar" Adana-1 2010       NA
 # … with abbreviated variable names ¹​province, ²​production</code></pre>
 </div>
 </div>
@@ -378,10 +378,311 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <details>
 <summary>Code</summary>
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">print</span>(<span class="st">"hello world"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(meyve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-stdout">
-<pre><code>[1] "hello world"</code></pre>
+<pre><code>  main_type         product_type           unit               Yıl           
+ Length:3675        Length:3675        Length:3675        Length:3675       
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+    Adana-1          Adıyaman-2      Afyonkarahisar-3    Aksaray-68    
+ Min.   :      0   Min.   :      0   Min.   :      0   Min.   :     0  
+ 1st Qu.:     47   1st Qu.:     26   1st Qu.:     28   1st Qu.:    36  
+ Median :   2121   Median :    752   Median :    294   Median :   758  
+ Mean   : 100452   Mean   :  70521   Mean   :  24540   Mean   :  7014  
+ 3rd Qu.:  34247   3rd Qu.:  13311   3rd Qu.:   5974   3rd Qu.:  7116  
+ Max.   :5387072   Max.   :4975556   Max.   :1218965   Max.   :135895  
+ NA's   :1077      NA's   :1960      NA's   :1705      NA's   :2400    
+    Amasya-5           Ankara-6        Antalya-7         Ardahan-75   
+ Min.   :     0.0   Min.   :     0   Min.   :      0   Min.   :    0  
+ 1st Qu.:    44.2   1st Qu.:    22   1st Qu.:     52   1st Qu.:   25  
+ Median :   855.0   Median :   703   Median :   1865   Median :   80  
+ Mean   : 23202.5   Mean   : 24798   Mean   :  94013   Mean   : 1115  
+ 3rd Qu.:  9316.8   3rd Qu.:  9596   3rd Qu.:  28666   3rd Qu.:  525  
+ Max.   :857679.0   Max.   :846092   Max.   :3394388   Max.   :15000  
+ NA's   :2085       NA's   :1716     NA's   :580       NA's   :3180   
+    Artvin-8          Aydın-9             Ağrı-4         Balıkesir-10    
+ Min.   :      0   Min.   :       0   Min.   :    0.0   Min.   :      0  
+ 1st Qu.:     30   1st Qu.:      41   1st Qu.:   11.0   1st Qu.:     30  
+ Median :    436   Median :    1602   Median :   85.5   Median :    919  
+ Mean   :  21821   Mean   :  182291   Mean   : 1829.0   Mean   :  77297  
+ 3rd Qu.:   2505   3rd Qu.:   17593   3rd Qu.: 1600.0   3rd Qu.:   9040  
+ Max.   :5004150   Max.   :17898765   Max.   :36278.0   Max.   :9222434  
+ NA's   :1525      NA's   :1021       NA's   :3141      NA's   :1165     
+   Bartın-74         Batman-72         Bayburt-69         Bilecik-11    
+ Min.   :      0   Min.   :      0   Min.   :    0.00   Min.   :     0  
+ 1st Qu.:     20   1st Qu.:     22   1st Qu.:   22.25   1st Qu.:    30  
+ Median :    400   Median :    329   Median :  108.00   Median :   692  
+ Mean   :  34392   Mean   :  13503   Mean   : 1709.83   Mean   : 22451  
+ 3rd Qu.:   3828   3rd Qu.:   3016   3rd Qu.:  742.25   3rd Qu.:  7654  
+ Max.   :3866800   Max.   :2220779   Max.   :17700.00   Max.   :921401  
+ NA's   :2030      NA's   :2390      NA's   :3345       NA's   :2040    
+   Bingöl-12          Bitlis-13         Bolu-14         Burdur-15     
+ Min.   :     0.0   Min.   :     0   Min.   :     0   Min.   :     0  
+ 1st Qu.:    54.8   1st Qu.:    33   1st Qu.:    26   1st Qu.:    29  
+ Median :   768.5   Median :   625   Median :   613   Median :   397  
+ Mean   : 10112.2   Mean   :  9598   Mean   : 13760   Mean   :  9916  
+ 3rd Qu.:  4488.2   3rd Qu.:  3998   3rd Qu.:  4693   3rd Qu.:  4873  
+ Max.   :964008.0   Max.   :465900   Max.   :714585   Max.   :301743  
+ NA's   :2655       NA's   :2275     NA's   :2510     NA's   :1355    
+    Bursa-16          Denizli-20      Diyarbakır-21         Düzce-81       
+ Min.   :       0   Min.   :      0   Min.   :     0.0   Min.   :       0  
+ 1st Qu.:      39   1st Qu.:     31   1st Qu.:    23.0   1st Qu.:       8  
+ Median :    1501   Median :   1986   Median :   814.5   Median :      50  
+ Mean   :  124798   Mean   :  67426   Mean   : 16849.3   Mean   :  242045  
+ 3rd Qu.:   25354   3rd Qu.:  35412   3rd Qu.:  8596.0   3rd Qu.:    1000  
+ Max.   :11835963   Max.   :2618833   Max.   :500170.0   Max.   :32115050  
+ NA's   :1361       NA's   :1375      NA's   :2125       NA's   :2045      
+   Edirne-22        Elazığ-23        Erzincan-24       Erzurum-25    
+ Min.   :     0   Min.   :      0   Min.   :     0   Min.   :     0  
+ 1st Qu.:    23   1st Qu.:     48   1st Qu.:    34   1st Qu.:    35  
+ Median :   328   Median :   2631   Median :   780   Median :   541  
+ Mean   :  8969   Mean   :  28771   Mean   : 13188   Mean   :  6821  
+ 3rd Qu.:  3107   3rd Qu.:  19010   3rd Qu.:  7520   3rd Qu.:  4458  
+ Max.   :178596   Max.   :1087014   Max.   :205500   Max.   :110458  
+ NA's   :2240     NA's   :2110      NA's   :2275     NA's   :2235    
+  Eskişehir-26     Gaziantep-27        Giresun-28        Gümüşhane-29     
+ Min.   :     0   Min.   :       0   Min.   :       0   Min.   :     0.0  
+ 1st Qu.:    19   1st Qu.:      34   1st Qu.:       9   1st Qu.:    31.5  
+ Median :   350   Median :    1480   Median :     111   Median :   652.0  
+ Mean   :  9619   Mean   :  238579   Mean   :  378174   Mean   : 10966.5  
+ 3rd Qu.:  3250   3rd Qu.:   19373   3rd Qu.:    2203   3rd Qu.:  5040.0  
+ Max.   :515621   Max.   :18568288   Max.   :76585687   Max.   :455050.0  
+ NA's   :1825     NA's   :2020       NA's   :1600       NA's   :2540      
+   Hakkari-30        Hatay-31          Isparta-32         Iğdır-76       
+ Min.   :     0   Min.   :       0   Min.   :      0   Min.   :     0.0  
+ 1st Qu.:    25   1st Qu.:      34   1st Qu.:     27   1st Qu.:   101.2  
+ Median :   473   Median :     928   Median :    448   Median :   778.5  
+ Mean   : 10071   Mean   :  127496   Mean   :  69522   Mean   : 13180.4  
+ 3rd Qu.:  5195   3rd Qu.:   16818   3rd Qu.:  11224   3rd Qu.:  8419.8  
+ Max.   :501500   Max.   :10791020   Max.   :5813586   Max.   :284440.0  
+ NA's   :2170     NA's   :1056       NA's   :1575      NA's   :2885      
+ Kahramanmaraş-46      Karabük-78      Karaman-70         Kars-36      
+ Min.   :      0.0   Min.   :    0   Min.   :      0   Min.   :     0  
+ 1st Qu.:     44.2   1st Qu.:   13   1st Qu.:     36   1st Qu.:    60  
+ Median :   1359.5   Median :  160   Median :   1997   Median :   265  
+ Mean   :  55476.3   Mean   : 4497   Mean   :  95725   Mean   :  5745  
+ 3rd Qu.:  21643.5   3rd Qu.: 2697   3rd Qu.:  21386   3rd Qu.:  1876  
+ Max.   :1645717.0   Max.   :59800   Max.   :4898180   Max.   :136819  
+ NA's   :1585        NA's   :2170    NA's   :1905      NA's   :3325    
+  Kastamonu-37       Kayseri-38         Kilis-79         Kocaeli-41     
+ Min.   :      0   Min.   :      0   Min.   :      0   Min.   :      0  
+ 1st Qu.:     26   1st Qu.:     40   1st Qu.:     18   1st Qu.:     34  
+ Median :    320   Median :    775   Median :    209   Median :    550  
+ Mean   :  38969   Mean   :  43290   Mean   :  46070   Mean   :  32814  
+ 3rd Qu.:   5672   3rd Qu.:  13817   3rd Qu.:   2808   3rd Qu.:   4286  
+ Max.   :4742524   Max.   :3384566   Max.   :3950882   Max.   :4913916  
+ NA's   :1965      NA's   :2285      NA's   :2225      NA's   :1915     
+    Konya-42         Kütahya-43        Kırklareli-39     Kırıkkale-71  
+ Min.   :      0   Min.   :      0.0   Min.   :     0   Min.   :    0  
+ 1st Qu.:     23   1st Qu.:     20.0   1st Qu.:    19   1st Qu.:   22  
+ Median :    799   Median :    220.5   Median :   220   Median :  271  
+ Mean   :  65523   Mean   :  23429.3   Mean   :  5807   Mean   : 3445  
+ 3rd Qu.:  24916   3rd Qu.:   4424.5   3rd Qu.:  2143   3rd Qu.: 3189  
+ Max.   :4410265   Max.   :1249498.0   Max.   :172815   Max.   :49543  
+ NA's   :1830      NA's   :1645        NA's   :2025     NA's   :2445   
+  Kırşehir-40       Malatya-44        Manisa-45          Mardin-47       
+ Min.   :     0   Min.   :      0   Min.   :       0   Min.   :     0.0  
+ 1st Qu.:    18   1st Qu.:     42   1st Qu.:      32   1st Qu.:    26.0  
+ Median :   185   Median :   1085   Median :    2485   Median :   433.5  
+ Mean   :  5319   Mean   :  82675   Mean   :  198267   Mean   : 17535.2  
+ 3rd Qu.:  2012   3rd Qu.:  10380   3rd Qu.:   28878   3rd Qu.:  6662.8  
+ Max.   :288617   Max.   :7805563   Max.   :14731657   Max.   :480105.0  
+ NA's   :2240     NA's   :2035      NA's   :1605       NA's   :2095      
+   Mersin-33          Muğla-48            Muş-49       Nevşehir-50    
+ Min.   :      0   Min.   :       0   Min.   :    0   Min.   :     0  
+ 1st Qu.:    132   1st Qu.:      36   1st Qu.:   31   1st Qu.:    22  
+ Median :   7896   Median :     755   Median :  319   Median :   667  
+ Mean   : 171631   Mean   :  102501   Mean   : 2425   Mean   : 15405  
+ 3rd Qu.:  71919   3rd Qu.:    7031   3rd Qu.: 2125   3rd Qu.: 10737  
+ Max.   :6231206   Max.   :15498422   Max.   :35571   Max.   :278816  
+ NA's   :1035      NA's   :650        NA's   :2835    NA's   :2200    
+    Niğde-51          Ordu-52           Osmaniye-80         Rize-53       
+ Min.   :      0   Min.   :        0   Min.   :      0   Min.   :      0  
+ 1st Qu.:     67   1st Qu.:       12   1st Qu.:     54   1st Qu.:      8  
+ Median :   2100   Median :      106   Median :    740   Median :     94  
+ Mean   :  99473   Mean   :   870671   Mean   :  28307   Mean   :  20702  
+ 3rd Qu.:  31700   3rd Qu.:     2058   3rd Qu.:   5429   3rd Qu.:   1400  
+ Max.   :4674630   Max.   :142811620   Max.   :3363549   Max.   :1438600  
+ NA's   :2350      NA's   :1885        NA's   :1481      NA's   :1740     
+   Sakarya-54         Samsun-55           Siirt-56          Sinop-57     
+ Min.   :       0   Min.   :       0   Min.   :      0   Min.   :     0  
+ 1st Qu.:      55   1st Qu.:      32   1st Qu.:     37   1st Qu.:    25  
+ Median :    2192   Median :     952   Median :    270   Median :   525  
+ Mean   :  304701   Mean   :  385609   Mean   :  91414   Mean   : 14692  
+ 3rd Qu.:   12694   3rd Qu.:   15665   3rd Qu.:   5687   3rd Qu.:  4440  
+ Max.   :42412045   Max.   :52982907   Max.   :7261423   Max.   :897279  
+ NA's   :2060       NA's   :1950       NA's   :2835      NA's   :2000    
+    Sivas-58         Tekirdağ-59          Tokat-60           Trabzon-61      
+ Min.   :     0.0   Min.   :     0.0   Min.   :      0.0   Min.   :       0  
+ 1st Qu.:    19.0   1st Qu.:    21.0   1st Qu.:     31.8   1st Qu.:      16  
+ Median :   672.5   Median :   385.5   Median :    799.0   Median :     281  
+ Mean   : 11557.7   Mean   : 18670.9   Mean   :  26732.2   Mean   :  191630  
+ 3rd Qu.:  4312.0   3rd Qu.:  4959.0   3rd Qu.:   9084.2   3rd Qu.:    4640  
+ Max.   :232378.0   Max.   :956766.0   Max.   :1252470.0   Max.   :34502820  
+ NA's   :2335       NA's   :1883       NA's   :1935        NA's   :1685      
+   Tunceli-62       Uşak-64           Van-65         Yalova-77     
+ Min.   :    0   Min.   :     0   Min.   :     0   Min.   :     0  
+ 1st Qu.:   25   1st Qu.:    26   1st Qu.:    33   1st Qu.:    30  
+ Median :  351   Median :   536   Median :   586   Median :   280  
+ Mean   : 4106   Mean   :  7091   Mean   : 13054   Mean   : 15200  
+ 3rd Qu.: 1848   3rd Qu.:  3951   3rd Qu.:  5506   3rd Qu.:  3045  
+ Max.   :82813   Max.   :530631   Max.   :208590   Max.   :834990  
+ NA's   :2540    NA's   :1626     NA's   :2630     NA's   :2040    
+   Yozgat-66       Zonguldak-67       Çanakkale-17       Çankırı-18    
+ Min.   :     0   Min.   :       0   Min.   :      0   Min.   :     0  
+ 1st Qu.:    29   1st Qu.:      17   1st Qu.:     70   1st Qu.:    20  
+ Median :   864   Median :     371   Median :   2811   Median :   673  
+ Mean   : 13493   Mean   :  149512   Mean   :  76969   Mean   :  8694  
+ 3rd Qu.: 10623   3rd Qu.:    4132   3rd Qu.:  26344   3rd Qu.:  5211  
+ Max.   :659444   Max.   :18109050   Max.   :4715599   Max.   :156800  
+ NA's   :2445     NA's   :2190       NA's   :1605      NA's   :2440    
+    Çorum-19       İstanbul-34         İzmir-35         Şanlıurfa-63     
+ Min.   :     0   Min.   :      0   Min.   :       0   Min.   :       0  
+ 1st Qu.:    18   1st Qu.:     11   1st Qu.:      26   1st Qu.:      13  
+ Median :   430   Median :     67   Median :     734   Median :     256  
+ Mean   : 15619   Mean   :   9720   Mean   :  155585   Mean   :  197204  
+ 3rd Qu.:  8829   3rd Qu.:    880   3rd Qu.:   20341   3rd Qu.:    4532  
+ Max.   :630020   Max.   :1439350   Max.   :15547977   Max.   :20410872  
+ NA's   :1880     NA's   :1880      NA's   :1110       NA's   :2045      
+   Şırnak-73     
+ Min.   :     0  
+ 1st Qu.:    20  
+ Median :   103  
+ Mean   :  2962  
+ 3rd Qu.:  1640  
+ Max.   :135245  
+ NA's   :2275    </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  main_type         product_type           unit             province        
+ Length:103530      Length:103530      Length:103530      Length:103530     
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+     year             production     
+ Length:103530      Min.   :      0  
+ Class :character   1st Qu.:     70  
+ Mode  :character   Median :    479  
+                    Mean   :   7464  
+                    3rd Qu.:   2555  
+                    Max.   :2794392  
+                    NA's   :42723    </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(tahil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code>  main_type         product_type           unit             province        
+ Length:288846      Length:288846      Length:288846      Length:288846     
+ Class :character   Class :character   Class :character   Class :character  
+ Mode  :character   Mode  :character   Mode  :character   Mode  :character  
+                                                                            
+                                                                            
+                                                                            
+                                                                            
+     year             production     
+ Length:288846      Min.   :      0  
+ Class :character   1st Qu.:    262  
+ Mode  :character   Median :   1881  
+                    Mean   :  55236  
+                    3rd Qu.:  16790  
+                    Max.   :7228473  
+                    NA's   :190210   </code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>meyve <span class="ot">&lt;-</span><span class="fu">separate</span>(meyve, product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_code"</span>, <span class="st">"product_name"</span>), <span class="at">sep =</span> <span class="st">"^</span><span class="sc">\\</span><span class="st">S*</span><span class="sc">\\</span><span class="st">K</span><span class="sc">\\</span><span class="st">s+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(meyve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 86
+  main_type  produ…¹ produ…² unit  Yıl   Adana…³ Adıya…⁴ Afyon…⁵ Aksar…⁶ Amasy…⁷
+  &lt;chr&gt;      &lt;chr&gt;   &lt;chr&gt;   &lt;chr&gt; &lt;chr&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 Meyve Ver… 01.21.… "(Sofr… " Ad… 2010        0       0       0       0       0
+2 Meyve Ver… 01.21.… "(Sofr… " Ad… 2010        0       0       0      NA      NA
+3 Meyve Ver… 01.21.… "(Şara… " Ad… 2010        0       0      NA      NA       0
+4 Meyve Ver… 01.21.… "(Kuru… " Ad… 2010        0       0       0       0      NA
+5 Meyve Ver… 01.21.… "(Kuru… " Ad… 2010       NA      NA      NA       0      NA
+6 Meyve Ver… 01.22.… "(Avok… " Ad… 2010       NA      NA      NA      NA      NA
+# … with 76 more variables: `Ankara-6` &lt;dbl&gt;, `Antalya-7` &lt;dbl&gt;,
+#   `Ardahan-75` &lt;dbl&gt;, `Artvin-8` &lt;dbl&gt;, `Aydın-9` &lt;dbl&gt;, `Ağrı-4` &lt;dbl&gt;,
+#   `Balıkesir-10` &lt;dbl&gt;, `Bartın-74` &lt;dbl&gt;, `Batman-72` &lt;dbl&gt;,
+#   `Bayburt-69` &lt;dbl&gt;, `Bilecik-11` &lt;dbl&gt;, `Bingöl-12` &lt;dbl&gt;,
+#   `Bitlis-13` &lt;dbl&gt;, `Bolu-14` &lt;dbl&gt;, `Burdur-15` &lt;dbl&gt;, `Bursa-16` &lt;dbl&gt;,
+#   `Denizli-20` &lt;dbl&gt;, `Diyarbakır-21` &lt;dbl&gt;, `Düzce-81` &lt;dbl&gt;,
+#   `Edirne-22` &lt;dbl&gt;, `Elazığ-23` &lt;dbl&gt;, `Erzincan-24` &lt;dbl&gt;, …</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>sebze <span class="ot">&lt;-</span><span class="fu">separate</span>(sebze, product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_code"</span>, <span class="st">"product_name"</span>), <span class="at">sep =</span> <span class="st">"^</span><span class="sc">\\</span><span class="st">S*</span><span class="sc">\\</span><span class="st">K</span><span class="sc">\\</span><span class="st">s+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  main_type   product_code    product_name        unit     provi…¹ year  produ…²
+  &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;               &lt;chr&gt;    &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+1 Ekilen Alan 01.11.61.00.01. "(Fasulye, Taze) "  " Dekar" Adana-1 2010     3640
+2 Ekilen Alan 01.11.61.00.02. "(Barbunya, Taze) " " Dekar" Adana-1 2010      600
+3 Ekilen Alan 01.11.62.00.00. "(Bezelye, Taze) "  " Dekar" Adana-1 2010     5860
+4 Ekilen Alan 01.11.69.00.01. "(Börülce, Taze) "  " Dekar" Adana-1 2010       55
+5 Ekilen Alan 01.11.69.00.02. "(Bakla, Taze) "    " Dekar" Adana-1 2010     3240
+6 Ekilen Alan 01.13.11.00.00. "(Kuşkonmaz) "      " Dekar" Adana-1 2010       NA
+# … with abbreviated variable names ¹​province, ²​production</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>tahil <span class="ot">&lt;-</span> <span class="fu">separate</span>(tahil, product_type, <span class="at">into =</span> <span class="fu">c</span>(<span class="st">"product_code"</span>, <span class="st">"product_name"</span>), <span class="at">sep =</span> <span class="st">"^</span><span class="sc">\\</span><span class="st">S*</span><span class="sc">\\</span><span class="st">K</span><span class="sc">\\</span><span class="st">s+"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+</div>
+<div class="cell">
+<details>
+<summary>Code</summary>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(tahil)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 7
+  main_type   product_code    product_name           unit  provi…¹ year  produ…²
+  &lt;chr&gt;       &lt;chr&gt;           &lt;chr&gt;                  &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;
+1 Ekilen Alan 01.11.11.00.00. "(Durum Buğdayı) "     " De… Adana-1 2010     8508
+2 Ekilen Alan 01.11.12.00.00. "(Buğday, Durum Buğda… " De… Adana-1 2010  2167738
+3 Ekilen Alan 01.11.20.00.00. "(Mısır) "             " De… Adana-1 2010   860354
+4 Ekilen Alan 01.11.31.00.01. "(Arpa (Biralık)) "    " De… Adana-1 2010       NA
+5 Ekilen Alan 01.11.31.00.02. "(Arpa (Diğer)) "      " De… Adana-1 2010    63190
+6 Ekilen Alan 01.11.32.00.00. "(Çavdar) "            " De… Adana-1 2010     1042
+# … with abbreviated variable names ¹​province, ²​production</code></pre>
 </div>
 </div>
 

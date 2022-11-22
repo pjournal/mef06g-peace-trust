@@ -67,11 +67,11 @@ colnames(tahil_raw) <- new_cols
 Seperating Column
 
 ```{r}
-tahil_v1 <- separate(data = tahil_raw, col = grain_type, into = c("main_type", "product_type"), sep = "ve")
+tahil_v1 <- separate(data = tahil_raw, col = grain_type, into = c("main_type", "product_type"), sep = " ve ")
 
 tahil <- separate(data = tahil_v1, col = product_type, into = c("product_type", "unit"), sep = "-")
 
-sebze_v1 <- separate(data = sebze_raw, col = vegetable_type, into = c("main_type", "product_type"), sep = "ve")
+sebze_v1 <- separate(data = sebze_raw, col = vegetable_type, into = c("main_type", "product_type"), sep = " ve ")
 
 sebze <- separate(data = sebze_v1, col = product_type, into = c("product_type", "unit"), sep = "-")
 
@@ -98,5 +98,39 @@ head(meyve)
 ```
 
 ```{r}
-print("hello world")
+summary(meyve)
 ```
+```{r}
+summary(sebze)
+```
+```{r}
+summary(tahil)
+```
+```{r}
+meyve <-separate(meyve, product_type, into = c("product_code", "product_name"), sep = "^\\S*\\K\\s+")
+```
+```{r}
+head(meyve)
+```
+
+
+
+```{r}
+sebze <-separate(sebze, product_type, into = c("product_code", "product_name"), sep = "^\\S*\\K\\s+")
+```
+
+```{r}
+head(sebze)
+```
+
+
+
+
+```{r}
+tahil <- separate(tahil, product_type, into = c("product_code", "product_name"), sep = "^\\S*\\K\\s+")
+```
+
+```{r}
+head(tahil)
+```
+

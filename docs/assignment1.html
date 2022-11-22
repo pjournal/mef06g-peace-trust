@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.1.251">
+<meta name="generator" content="quarto-1.1.189">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -1037,6 +1037,54 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p><img src="assignment1_files/figure-html/unnamed-chunk-15-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="which-investor-making-the-highest-number-of-investment-according-to-sector-in-every-investment-stage" class="level4">
+<h4 class="anchored" data-anchor-id="which-investor-making-the-highest-number-of-investment-according-to-sector-in-every-investment-stage">Which investor making the highest number of investment according to sector in every investment stage</h4>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>data_investor <span class="sc">%&gt;%</span> <span class="fu">separate_rows</span>(Investor,<span class="at">sep =</span> <span class="st">","</span>) <span class="sc">%&gt;%</span>  <span class="fu">head</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 10
+  Company   Sector Inves…¹ Date       Finan…² Origin Stake DealV…³ Stage inves…⁴
+  &lt;chr&gt;     &lt;chr&gt;  &lt;chr&gt;   &lt;date&gt;     &lt;chr&gt;   &lt;chr&gt;  &lt;dbl&gt;   &lt;dbl&gt; &lt;chr&gt;   &lt;int&gt;
+1 Abonesep… SaaS   "Keire… 2021-06-01 Yes     Turkey     5  100000 Seed…       2
+2 Abonesep… SaaS   " Berk… 2021-06-01 Yes     Turkey     5  100000 Seed…       2
+3 Abrakada… Gaming "WePla… 2021-12-01 Yes     Turkey     5  250000 Seed…       1
+4 Ace Games Gaming "Acter… 2021-04-01 Yes     Turke…    NA      NA Seed…       5
+5 Ace Games Gaming " NFX"  2021-04-01 Yes     Turke…    NA      NA Seed…       5
+6 Ace Games Gaming " Kris… 2021-04-01 Yes     Turke…    NA      NA Seed…       5
+# … with abbreviated variable names ¹​Investor, ²​Financial, ³​DealValue,
+#   ⁴​investor_number</code></pre>
+</div>
+</div>
+<div class="cell">
+<details>
+<summary>Show the code</summary>
+<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a>df_investor<span class="ot">&lt;-</span>data_investor <span class="sc">%&gt;%</span> <span class="fu">separate_rows</span>(Investor,<span class="at">sep =</span> <span class="st">","</span>)</span>
+<span id="cb27-2"><a href="#cb27-2" aria-hidden="true" tabindex="-1"></a>df_investor <span class="ot">&lt;-</span> df_investor <span class="sc">%&gt;%</span> <span class="fu">select</span>(Investor,Stage,Sector)</span>
+<span id="cb27-3"><a href="#cb27-3" aria-hidden="true" tabindex="-1"></a>df_investor <span class="sc">%&gt;%</span> <span class="fu">group_by</span>(Stage,Sector,Investor) <span class="sc">%&gt;%</span> <span class="fu">summarise</span>(<span class="at">Number_of_invesmment=</span><span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="fu">arrange</span>(<span class="fu">desc</span>(Number_of_invesmment))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 628 × 4
+# Groups:   Stage, Sector [73]
+   Stage          Sector               Investor                   Number_of_in…¹
+   &lt;chr&gt;          &lt;chr&gt;                &lt;chr&gt;                               &lt;int&gt;
+ 1 Seed Stage     Gaming               "Games United"                          8
+ 2 Seed Stage     Gaming               "WePlay Ventures"                       7
+ 3 Acquisition    Gaming               "Rollic"                                3
+ 4 Acquisition    SaaS                 "Verusaturk GSYO"                       2
+ 5 Early VC Stage Gaming               " Balderton Capital"                    2
+ 6 Early VC Stage Gaming               " Makers Fund"                          2
+ 7 Later VC Stage Delivery &amp; Logistics " Goodwater Capital"                    2
+ 8 Later VC Stage Delivery &amp; Logistics " Tiger Global Management"              2
+ 9 Seed Stage     Advertising          " twozero Ventures"                     2
+10 Seed Stage     Agritech             "Startup Wise Guys"                     2
+# … with 618 more rows, and abbreviated variable name ¹​Number_of_invesmment</code></pre>
+</div>
+</div>
+<p>** So if we have a company in the seed stage and in the gaming sector, it is very meaningfull to aim ınvestors like “Games United” and “WePlay Ventures” in order to get investment **</p>
 
 
 </section>

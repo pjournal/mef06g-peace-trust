@@ -348,3 +348,13 @@ We can say that Seed Stage has been mostly invested by Financial investors and A
     geom_dotplot(binaxis = "y", stackdir = "center",
                  dotsize=1,binwidth = 1)
 ```
+#### Which investor making the highest number of investment according to sector in every investment stage 
+```{r}
+data_investor %>% separate_rows(Investor,sep = ",") %>%  head()
+```
+```{r}
+df_investor<-data_investor %>% separate_rows(Investor,sep = ",")
+df_investor <- df_investor %>% select(Investor,Stage,Sector)
+df_investor %>% group_by(Stage,Sector,Investor) %>% summarise(Number_of_invesmment=n()) %>% arrange(desc(Number_of_invesmment))
+```
+** So if we have a company in the seed stage and in the gaming sector, it is very meaningfull to aim ınvestors like "Games United" and "WePlay Ventures" in order to get investment **

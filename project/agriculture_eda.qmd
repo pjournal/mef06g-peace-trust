@@ -1,6 +1,7 @@
 ---
 title: "Group Project: Agriculture in Turkey - EDA"
 date: "19 November 2022"
+title-block-banner: "#008000"
 format:
   html:
     toc: true
@@ -8,6 +9,8 @@ format:
     toc-float: true
     number-sections: false
 ---
+
+![Tarım](tarim.jpg)
 
 ```{=html}
 <style>
@@ -38,12 +41,14 @@ We start by  loading our dataset that we prepare in the **Group Project: Agricul
 
 ```{r call_libraries, warning=  FALSE,  message = FALSE}
 #install.packages("readxl")
+#install.packages("ggrepel")
 library(readxl)
 library(lubridate)
 library(dplyr)
 library(tidyverse)
 library(ggplot2)
 library(tidyr)
+library(ggrepel)
 ```
 
 
@@ -80,9 +85,12 @@ df <- tarim %>%
 
 ggplot(data=df, aes(x=year, y=TotalDecare)) +
   geom_line() + 
+  ylim(220000000,max(df$TotalDecare))+
   ggtitle("Total Agriculture Areas(Decare) By Year")
-```
 
+```
+Between 2010-2011, biggest agricultural area lost is happened. In 2011-2015, it seems to be good years for Agriculture in terms of magnitude of the areas.
+However, after 2015, general trend moves towards to losing the Agricultural areas, after 2019 there seems to be first improvement, interestingly first improvement is in 2020, "the pandemic year" but in general in 11 years, size of the agricultural areas moving downwards.
 
 ### Yearly agriculture areas 
 
@@ -93,7 +101,7 @@ df_1 <- tarim %>%
   group_by(province) %>% 
   mutate(prev_decare = lag(decare)) %>% 
   ungroup()
-df_1
+head(df_1)
 ```
 If we look at year by year lost, the biggest lost was in Sivas, 2011 with 2.290.480 decare loss.
 Second is Kars with 1.628.918, third is Konya with 1.526.849. However, Konya's total agriculture areas are greater than others. Rate of yearly difference and decare will be another indicator.
@@ -102,13 +110,14 @@ Second is Kars with 1.628.918, third is Konya with 1.526.849. However, Konya's t
 df_1 <- df_1 %>%
   mutate(difference = (decare-prev_decare))
 arrange(df_1, difference)
+head(df_1)
 ```
 If we sort according to rate of difference Ardahan,2014 is the first with 0.7, Kars,2013 and Karabük,2018 are the second and Third in terms of yearly agriculture area lost. 
 ```{r}
 df_1 <- df_1 %>%
-  mutate(rate_difference = difference/decare)
-arrange(df_1, rate_difference)
-
+  mutate(difference_rate = round(difference/decare,2))%>%
+  arrange(df_1, difference_rate)
+head(df_1)
 ```
 Interestingly, yearly loss is greater in the first half of the decade, but overall loss is increasing year by year, let's visualise this by adding cumulative loss column.
 
@@ -116,21 +125,12 @@ If we look at total lost, Şanlıurda, Konya ans Sivas are the three big cities
 ```{r}
 df_p <- df_1 %>%
   group_by(province) %>%
-  summarise('TotalDifference'=sum(difference, na.rm=TRUE),'TotalRate'=sum(rate_difference, na.rm=TRUE)) %>%
+  summarise('TotalDifference'=sum(difference, na.rm=TRUE),'TotalRate'=sum(difference_rate, na.rm=TRUE)) %>%
   arrange(TotalDifference)
 
-knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2022")
+knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2021")
 
 ```
-```{r}
-df_p <- df_p %>%
-  arrange(TotalRate)
-
-knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2022")
-
-```
-
-
 ```{r}
 
 df_p <- df_p %>%
@@ -138,22 +138,29 @@ df_p <- df_p %>%
 
 ggplot(data=head(df_p,10), aes(x=province, y=-1*TotalDifference)) +
   geom_bar(position="dodge",stat="identity") + 
-  ggtitle("Total Agriculture Area Loss by Province 2010-2022 - Top 10 Province") +
+  ggtitle("Total Agriculture Area Loss by Province 2010-2021 - Top 10 Province") +
   theme(text = element_text(size = 10),element_line(size =15),axis.text.x = element_text(angle = 90))
 
 
 ```
+**Zonguldak lost almost half of the agricultural areas in 11 years**
 
 ```{r}
+df_p <- df_p %>%
+  arrange(TotalRate)
 
-df_y <- df_1 %>%
-  group_by(year) %>%
-  summarise('TotalYearlyDifference'=sum(difference, na.rm=TRUE)) %>%
-  arrange(TotalYearlyDifference)
+knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2021")
 
-ggplot(df_y, aes(x=year, y=TotalYearlyDifference*-1)) +
+```
+```{r}
+df_o <- df_1 %>%
+  group_by(province) %>%
+  summarise('TotalYearlyDifferenceRate'=sum(difference_rate, na.rm=TRUE)) %>%
+  arrange(TotalYearlyDifferenceRate)
+
+ggplot(head(df_o,10), aes(x=province, y=TotalYearlyDifferenceRate)) +
   geom_bar(position="dodge",stat="identity") + 
-  ggtitle("Total Agriculture Area Loss by Year 2010-2022") +
+  ggtitle("Total Agriculture Area Loss Rate by Province 2010-2021") +
   theme(axis.text.x = element_text(angle = 90))
 
 
@@ -161,7 +168,93 @@ ggplot(df_y, aes(x=year, y=TotalYearlyDifference*-1)) +
 
 
 
+### Distribution of Agricultural Production
+
+### Fruits
 
 
+```{r warning=FALSE}
 
+total = sum(meyve[, 'production'],na.rm=TRUE)
+
+grouped_data <- meyve %>%
+  group_by(product_name) %>%
+  summarise(TotalbyName = sum(production,na.rm=TRUE)) %>%
+  mutate(rate = round((TotalbyName/total)*100),2)
+
+plot_data <- grouped_data %>%
+  mutate(rank = rank(-TotalbyName), 
+         product_name = ifelse(rank <= 10, product_name, 'Other'))
+
+ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) + 
+  geom_label_repel(data = plot_data,
+                   aes(y = rate, label = paste0(product_name, rate,"%")),
+                   size = 5, nudge_x = 1, show.legend = FALSE) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid  = element_blank())+ 
+  ggtitle("Top 10 Fruit Production in Turkey between 2010-2021")
+```
+
+### Vegetables
+```{r warning=FALSE}
+
+total = sum(sebze[, 'decare'],na.rm=TRUE)
+
+grouped_data <- sebze %>%
+  group_by(product_name) %>%
+  summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
+  mutate(rate = round((TotalbyName/total)*100),2)
+
+plot_data <- grouped_data %>%
+  mutate(rank = rank(-TotalbyName), 
+         product_name = ifelse(rank <= 10, product_name, 'Other'))
+
+ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) + 
+  geom_label_repel(data = plot_data,
+                   aes(y = rate, label = paste0(product_name, rate,"%")),
+                   size = 5, nudge_x = 1, show.legend = FALSE) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid  = element_blank())+ 
+  ggtitle("Top 10 Vegetable Production in Turkey  between 2010-2021")
+
+```
+### Grain
+```{r warning=FALSE}
+
+
+total = sum(tahil[, 'decare'],na.rm=TRUE)
+
+grouped_data <- tahil %>%
+  group_by(product_name) %>%
+  summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
+  mutate(rate = round((TotalbyName/total)*100),2)
+
+plot_data <- grouped_data %>%
+  mutate(rank = rank(-TotalbyName), 
+         product_name = ifelse(rank <= 10, product_name, 'Other'))
+
+ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
+  geom_bar(stat="identity", width=1) +
+  coord_polar("y", start=0) + 
+  geom_label_repel(data = plot_data,
+                   aes(y = rate, label = paste0(product_name, rate,"%")),
+                   size = 5, nudge_x = 1, show.legend = FALSE) +
+  theme(axis.text = element_blank(),
+        axis.ticks = element_blank(),
+        panel.grid  = element_blank())+ 
+  ggtitle("Top 10 Grain Production in Turkey between 2010-2021")
+```
+
+```{r}
+
+
+```
+
+### Climate Change and Agrriculture
 

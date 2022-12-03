@@ -123,6 +123,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<style>
+    .quarto-title-block .quarto-title-banner {
+      background: #008000;
+    }
+    </style>
 
 
 </head>
@@ -141,7 +146,28 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Group Project: Agriculture in Turkey - EDA</span></h1>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 19, 2022</p>
+      </div>
+    </div>
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -209,35 +235,27 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul class="collapse">
   <li><a href="#agriculture-areas-are-shrinking-slightly" id="toc-agriculture-areas-are-shrinking-slightly" class="nav-link" data-scroll-target="#agriculture-areas-are-shrinking-slightly">Agriculture areas are shrinking slightly</a></li>
   <li><a href="#yearly-agriculture-areas" id="toc-yearly-agriculture-areas" class="nav-link" data-scroll-target="#yearly-agriculture-areas">Yearly agriculture areas</a></li>
+  <li><a href="#distribution-of-agricultural-production" id="toc-distribution-of-agricultural-production" class="nav-link" data-scroll-target="#distribution-of-agricultural-production">Distribution of Agricultural Production</a></li>
+  <li><a href="#fruits" id="toc-fruits" class="nav-link" data-scroll-target="#fruits">Fruits</a></li>
+  <li><a href="#vegetables" id="toc-vegetables" class="nav-link" data-scroll-target="#vegetables">Vegetables</a></li>
+  <li><a href="#grain" id="toc-grain" class="nav-link" data-scroll-target="#grain">Grain</a></li>
+  <li><a href="#climate-change-and-agrriculture" id="toc-climate-change-and-agrriculture" class="nav-link" data-scroll-target="#climate-change-and-agrriculture">Climate Change and Agrriculture</a></li>
   </ul></li>
   </ul>
 </nav>
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content quarto-banner-title-block" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Group Project: Agriculture in Turkey - EDA</span></h1>
+
+
+
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="tarim.jpg" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Tarım</figcaption><p></p>
+</figure>
 </div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">November 19, 2022</p>
-    </div>
-  </div>
-    
-  </div>
-  
-
-</header>
-
 <style>
     body { 
     font-family: Calibri;
@@ -257,12 +275,14 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="call-necessary-libraries">Call necessary libraries</h4>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("readxl")</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co">#install.packages("ggrepel")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyr)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggrepel)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="load-the-data" class="level2">
@@ -297,11 +317,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span>df, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>TotalDecare)) <span class="sc">+</span></span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Agriculture Areas(Decare) By Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">220000000</span>,<span class="fu">max</span>(df<span class="sc">$</span>TotalDecare))<span class="sc">+</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Agriculture Areas(Decare) By Year"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="agriculture_eda_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+<p>Between 2010-2011, biggest agricultural area lost is happened. In 2011-2015, it seems to be good years for Agriculture in terms of magnitude of the areas. However, after 2015, general trend moves towards to losing the Agricultural areas, after 2019 there seems to be first improvement, interestingly first improvement is in 2020, “the pandemic year” but in general in 11 years, size of the agricultural areas moving downwards.</p>
 </section>
 <section id="yearly-agriculture-areas" class="level3">
 <h3 class="anchored" data-anchor-id="yearly-agriculture-areas">Yearly agriculture areas</h3>
@@ -312,22 +334,17 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(province) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prev_decare =</span> <span class="fu">lag</span>(decare)) <span class="sc">%&gt;%</span> </span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>df_1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 972 × 5
-   province province_code  year   decare prev_decare
-   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
- 1 Adana    1              2010 5506353          NA 
- 2 Adana    1              2011 4962979.    5506353 
- 3 Adana    1              2012 4807968     4962979.
- 4 Adana    1              2013 4751612.    4807968 
- 5 Adana    1              2014 4982042.    4751612.
- 6 Adana    1              2015 4887150     4982042.
- 7 Adana    1              2016 4914333     4887150 
- 8 Adana    1              2017 4981433     4914333 
- 9 Adana    1              2018 4855975     4981433 
-10 Adana    1              2019 4767252     4855975 
-# … with 962 more rows</code></pre>
+<pre><code># A tibble: 6 × 5
+  province province_code  year   decare prev_decare
+  &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;
+1 Adana    1              2010 5506353          NA 
+2 Adana    1              2011 4962979.    5506353 
+3 Adana    1              2012 4807968     4962979.
+4 Adana    1              2013 4751612.    4807968 
+5 Adana    1              2014 4982042.    4751612.
+6 Adana    1              2015 4887150     4982042.</code></pre>
 </div>
 </div>
 <p>If we look at year by year lost, the biggest lost was in Sivas, 2011 with 2.290.480 decare loss. Second is Kars with 1.628.918, third is Konya with 1.526.849. However, Konya’s total agriculture areas are greater than others. Rate of yearly difference and decare will be another indicator.</p>
@@ -351,41 +368,49 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 10 Kahramanmaraş 46             2012  3225058.    3753120.   -528062.
 # … with 962 more rows</code></pre>
 </div>
+<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 6 × 6
+  province province_code  year   decare prev_decare difference
+  &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;
+1 Adana    1              2010 5506353          NA         NA 
+2 Adana    1              2011 4962979.    5506353    -543374.
+3 Adana    1              2012 4807968     4962979.   -155011.
+4 Adana    1              2013 4751612.    4807968     -56356.
+5 Adana    1              2014 4982042.    4751612.    230430 
+6 Adana    1              2015 4887150     4982042.    -94892.</code></pre>
+</div>
 </div>
 <p>If we sort according to rate of difference Ardahan,2014 is the first with 0.7, Kars,2013 and Karabük,2018 are the second and Third in terms of yearly agriculture area lost.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_1 <span class="ot">&lt;-</span> df_1 <span class="sc">%&gt;%</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate_difference =</span> difference<span class="sc">/</span>decare)</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="fu">arrange</span>(df_1, rate_difference)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_1 <span class="ot">&lt;-</span> df_1 <span class="sc">%&gt;%</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">difference_rate =</span> <span class="fu">round</span>(difference<span class="sc">/</span>decare,<span class="dv">2</span>))<span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(df_1, difference_rate)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(df_1)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code># A tibble: 972 × 7
-   province province_code  year   decare prev_decare difference rate_difference
-   &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;
- 1 Ardahan  75             2014  329525      588632    -259107           -0.786
- 2 Kars     36             2013 2118640     3747558   -1628918           -0.769
- 3 Karabük  78             2018  337488      498499    -161011           -0.477
- 4 Osmaniye 80             2011 1153635     1664382    -510747           -0.443
- 5 Sivas    58             2011 7298275     9588755   -2290480           -0.314
- 6 Kocaeli  41             2018  786927      974696    -187769           -0.239
- 7 Yalova   77             2016  107163.     132533.    -25370           -0.237
- 8 Ardahan  75             2013  588632      723061    -134429           -0.228
- 9 Şırnak   73             2016  778838      944625    -165787           -0.213
-10 Yalova   77             2012  127971.     154171.    -26200.          -0.205
-# … with 962 more rows</code></pre>
+<pre><code># A tibble: 6 × 7
+  province province_code  year   decare prev_decare difference difference_rate
+  &lt;chr&gt;    &lt;chr&gt;         &lt;dbl&gt;    &lt;dbl&gt;       &lt;dbl&gt;      &lt;dbl&gt;           &lt;dbl&gt;
+1 Adana    1              2010 5506353          NA         NA            NA   
+2 Adana    1              2011 4962979.    5506353    -543374.           -0.11
+3 Adana    1              2012 4807968     4962979.   -155011.           -0.03
+4 Adana    1              2013 4751612.    4807968     -56356.           -0.01
+5 Adana    1              2014 4982042.    4751612.    230430             0.05
+6 Adana    1              2015 4887150     4982042.    -94892.           -0.02</code></pre>
 </div>
 </div>
 <p>Interestingly, yearly loss is greater in the first half of the decade, but overall loss is increasing year by year, let’s visualise this by adding cumulative loss column.</p>
 <p>If we look at total lost, Şanlıurda, Konya ans Sivas are the three big cities</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="ot">&lt;-</span> df_1 <span class="sc">%&gt;%</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(province) <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">'TotalDifference'</span><span class="ot">=</span><span class="fu">sum</span>(difference, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="st">'TotalRate'</span><span class="ot">=</span><span class="fu">sum</span>(rate_difference, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalDifference)</span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_p),<span class="at">caption =</span> <span class="st">"Total Agriculture Lost Areas by Province 2010-2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="ot">&lt;-</span> df_1 <span class="sc">%&gt;%</span></span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(province) <span class="sc">%&gt;%</span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">'TotalDifference'</span><span class="ot">=</span><span class="fu">sum</span>(difference, <span class="at">na.rm=</span><span class="cn">TRUE</span>),<span class="st">'TotalRate'</span><span class="ot">=</span><span class="fu">sum</span>(difference_rate, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalDifference)</span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_p),<span class="at">caption =</span> <span class="st">"Total Agriculture Lost Areas by Province 2010-2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
-<caption>Total Agriculture Lost Areas by Province 2010-2022</caption>
+<caption>Total Agriculture Lost Areas by Province 2010-2021</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">province</th>
@@ -397,45 +422,58 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Şanlıurfa</td>
 <td style="text-align: right;">-2145906</td>
-<td style="text-align: right;">-0.2050763</td>
+<td style="text-align: right;">-0.19</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Konya</td>
 <td style="text-align: right;">-2058950</td>
-<td style="text-align: right;">-0.1085766</td>
+<td style="text-align: right;">-0.11</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Sivas</td>
 <td style="text-align: right;">-1771190</td>
-<td style="text-align: right;">-0.2479747</td>
+<td style="text-align: right;">-0.26</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Yozgat</td>
 <td style="text-align: right;">-1191803</td>
-<td style="text-align: right;">-0.1929925</td>
+<td style="text-align: right;">-0.19</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Kırşehir</td>
 <td style="text-align: right;">-712105</td>
-<td style="text-align: right;">-0.2123180</td>
+<td style="text-align: right;">-0.23</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Çorum</td>
 <td style="text-align: right;">-679593</td>
-<td style="text-align: right;">-0.1212773</td>
+<td style="text-align: right;">-0.12</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="ot">&lt;-</span> df_p <span class="sc">%&gt;%</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalRate)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_p),<span class="at">caption =</span> <span class="st">"Total Agriculture Lost Areas by Province 2010-2022"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="ot">&lt;-</span> df_p <span class="sc">%&gt;%</span></span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalDifference)</span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">head</span>(df_p,<span class="dv">10</span>), <span class="fu">aes</span>(<span class="at">x=</span>province, <span class="at">y=</span><span class="sc">-</span><span class="dv">1</span><span class="sc">*</span>TotalDifference)) <span class="sc">+</span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"dodge"</span>,<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Agriculture Area Loss by Province 2010-2021 - Top 10 Province"</span>) <span class="sc">+</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),<span class="fu">element_line</span>(<span class="at">size =</span><span class="dv">15</span>),<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="agriculture_eda_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<p><strong>Zonguldak lost almost half of the agricultural areas in 11 years</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="ot">&lt;-</span> df_p <span class="sc">%&gt;%</span></span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalRate)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_p),<span class="at">caption =</span> <span class="st">"Total Agriculture Lost Areas by Province 2010-2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
-<caption>Total Agriculture Lost Areas by Province 2010-2022</caption>
+<caption>Total Agriculture Lost Areas by Province 2010-2021</caption>
 <thead>
 <tr class="header">
 <th style="text-align: left;">province</th>
@@ -447,63 +485,147 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Zonguldak</td>
 <td style="text-align: right;">-218204.5</td>
-<td style="text-align: right;">-0.4586801</td>
+<td style="text-align: right;">-0.46</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Osmaniye</td>
 <td style="text-align: right;">-431321.0</td>
-<td style="text-align: right;">-0.3809121</td>
+<td style="text-align: right;">-0.37</td>
 </tr>
 <tr class="odd">
-<td style="text-align: left;">Batman</td>
-<td style="text-align: right;">-330415.0</td>
-<td style="text-align: right;">-0.3208389</td>
-</tr>
-<tr class="even">
 <td style="text-align: left;">Kars</td>
 <td style="text-align: right;">-61045.0</td>
-<td style="text-align: right;">-0.3104480</td>
+<td style="text-align: right;">-0.31</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Batman</td>
+<td style="text-align: right;">-330415.0</td>
+<td style="text-align: right;">-0.31</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Karabük</td>
 <td style="text-align: right;">-85981.0</td>
-<td style="text-align: right;">-0.2885365</td>
+<td style="text-align: right;">-0.29</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Yalova</td>
-<td style="text-align: right;">-26249.2</td>
-<td style="text-align: right;">-0.2528725</td>
+<td style="text-align: left;">Sivas</td>
+<td style="text-align: right;">-1771190.0</td>
+<td style="text-align: right;">-0.26</td>
 </tr>
 </tbody>
 </table>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>df_p <span class="ot">&lt;-</span> df_p <span class="sc">%&gt;%</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalDifference)</span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data=</span><span class="fu">head</span>(df_p,<span class="dv">10</span>), <span class="fu">aes</span>(<span class="at">x=</span>province, <span class="at">y=</span><span class="sc">-</span><span class="dv">1</span><span class="sc">*</span>TotalDifference)) <span class="sc">+</span></span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"dodge"</span>,<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Agriculture Area Loss by Province 2010-2022 - Top 10 Province"</span>) <span class="sc">+</span></span>
-<span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">text =</span> <span class="fu">element_text</span>(<span class="at">size =</span> <span class="dv">10</span>),<span class="fu">element_line</span>(<span class="at">size =</span><span class="dv">15</span>),<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output-display">
-<p><img src="agriculture_eda_files/figure-html/unnamed-chunk-8-1.png" class="img-fluid" width="672"></p>
-</div>
-</div>
-<div class="cell">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>df_y <span class="ot">&lt;-</span> df_1 <span class="sc">%&gt;%</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">'TotalYearlyDifference'</span><span class="ot">=</span><span class="fu">sum</span>(difference, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalYearlyDifference)</span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(df_y, <span class="fu">aes</span>(<span class="at">x=</span>year, <span class="at">y=</span>TotalYearlyDifference<span class="sc">*-</span><span class="dv">1</span>)) <span class="sc">+</span></span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"dodge"</span>,<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> </span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Agriculture Area Loss by Year 2010-2022"</span>) <span class="sc">+</span></span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>df_o <span class="ot">&lt;-</span> df_1 <span class="sc">%&gt;%</span></span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(province) <span class="sc">%&gt;%</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="st">'TotalYearlyDifferenceRate'</span><span class="ot">=</span><span class="fu">sum</span>(difference_rate, <span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(TotalYearlyDifferenceRate)</span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="fu">head</span>(df_o,<span class="dv">10</span>), <span class="fu">aes</span>(<span class="at">x=</span>province, <span class="at">y=</span>TotalYearlyDifferenceRate)) <span class="sc">+</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">position=</span><span class="st">"dodge"</span>,<span class="at">stat=</span><span class="st">"identity"</span>) <span class="sc">+</span> </span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Total Agriculture Area Loss Rate by Province 2010-2021"</span>) <span class="sc">+</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">90</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <p><img src="agriculture_eda_files/figure-html/unnamed-chunk-9-1.png" class="img-fluid" width="672"></p>
 </div>
 </div>
+</section>
+<section id="distribution-of-agricultural-production" class="level3">
+<h3 class="anchored" data-anchor-id="distribution-of-agricultural-production">Distribution of Agricultural Production</h3>
+</section>
+<section id="fruits" class="level3">
+<h3 class="anchored" data-anchor-id="fruits">Fruits</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>total <span class="ot">=</span> <span class="fu">sum</span>(meyve[, <span class="st">'production'</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>grouped_data <span class="ot">&lt;-</span> meyve <span class="sc">%&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(product_name) <span class="sc">%&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalbyName =</span> <span class="fu">sum</span>(production,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> <span class="fu">round</span>((TotalbyName<span class="sc">/</span>total)<span class="sc">*</span><span class="dv">100</span>),<span class="dv">2</span>)</span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> grouped_data <span class="sc">%&gt;%</span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>TotalbyName), </span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">product_name =</span> <span class="fu">ifelse</span>(rank <span class="sc">&lt;=</span> <span class="dv">10</span>, product_name, <span class="st">'Other'</span>))</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span>rate, <span class="at">fill=</span>product_name)) <span class="sc">+</span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start=</span><span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> plot_data,</span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">y =</span> rate, <span class="at">label =</span> <span class="fu">paste0</span>(product_name, rate,<span class="st">"%"</span>)),</span>
+<span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">5</span>, <span class="at">nudge_x =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb16-18"><a href="#cb16-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-19"><a href="#cb16-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb16-20"><a href="#cb16-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid  =</span> <span class="fu">element_blank</span>())<span class="sc">+</span> </span>
+<span id="cb16-21"><a href="#cb16-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Top 10 Fruit Production in Turkey between 2010-2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="agriculture_eda_files/figure-html/unnamed-chunk-10-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="vegetables" class="level3">
+<h3 class="anchored" data-anchor-id="vegetables">Vegetables</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>total <span class="ot">=</span> <span class="fu">sum</span>(sebze[, <span class="st">'decare'</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>grouped_data <span class="ot">&lt;-</span> sebze <span class="sc">%&gt;%</span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(product_name) <span class="sc">%&gt;%</span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalbyName =</span> <span class="fu">sum</span>(decare,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> <span class="fu">round</span>((TotalbyName<span class="sc">/</span>total)<span class="sc">*</span><span class="dv">100</span>),<span class="dv">2</span>)</span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> grouped_data <span class="sc">%&gt;%</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>TotalbyName), </span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">product_name =</span> <span class="fu">ifelse</span>(rank <span class="sc">&lt;=</span> <span class="dv">10</span>, product_name, <span class="st">'Other'</span>))</span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span>rate, <span class="at">fill=</span>product_name)) <span class="sc">+</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start=</span><span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> plot_data,</span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">y =</span> rate, <span class="at">label =</span> <span class="fu">paste0</span>(product_name, rate,<span class="st">"%"</span>)),</span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">5</span>, <span class="at">nudge_x =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid  =</span> <span class="fu">element_blank</span>())<span class="sc">+</span> </span>
+<span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Top 10 Vegetable Production in Turkey  between 2010-2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="agriculture_eda_files/figure-html/unnamed-chunk-11-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+</section>
+<section id="grain" class="level3">
+<h3 class="anchored" data-anchor-id="grain">Grain</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>total <span class="ot">=</span> <span class="fu">sum</span>(tahil[, <span class="st">'decare'</span>],<span class="at">na.rm=</span><span class="cn">TRUE</span>)</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>grouped_data <span class="ot">&lt;-</span> tahil <span class="sc">%&gt;%</span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(product_name) <span class="sc">%&gt;%</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">TotalbyName =</span> <span class="fu">sum</span>(decare,<span class="at">na.rm=</span><span class="cn">TRUE</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rate =</span> <span class="fu">round</span>((TotalbyName<span class="sc">/</span>total)<span class="sc">*</span><span class="dv">100</span>),<span class="dv">2</span>)</span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a>plot_data <span class="ot">&lt;-</span> grouped_data <span class="sc">%&gt;%</span></span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">rank =</span> <span class="fu">rank</span>(<span class="sc">-</span>TotalbyName), </span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">product_name =</span> <span class="fu">ifelse</span>(rank <span class="sc">&lt;=</span> <span class="dv">10</span>, product_name, <span class="st">'Other'</span>))</span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(plot_data, <span class="fu">aes</span>(<span class="at">x=</span><span class="st">""</span>, <span class="at">y=</span>rate, <span class="at">fill=</span>product_name)) <span class="sc">+</span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat=</span><span class="st">"identity"</span>, <span class="at">width=</span><span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_polar</span>(<span class="st">"y"</span>, <span class="at">start=</span><span class="dv">0</span>) <span class="sc">+</span> </span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_label_repel</span>(<span class="at">data =</span> plot_data,</span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>                   <span class="fu">aes</span>(<span class="at">y =</span> rate, <span class="at">label =</span> <span class="fu">paste0</span>(product_name, rate,<span class="st">"%"</span>)),</span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>                   <span class="at">size =</span> <span class="dv">5</span>, <span class="at">nudge_x =</span> <span class="dv">1</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a>        <span class="at">axis.ticks =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">panel.grid  =</span> <span class="fu">element_blank</span>())<span class="sc">+</span> </span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggtitle</span>(<span class="st">"Top 10 Grain Production in Turkey between 2010-2021"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<p><img src="agriculture_eda_files/figure-html/unnamed-chunk-12-1.png" class="img-fluid" width="672"></p>
+</div>
+</div>
+<div class="cell">
+
+</div>
+</section>
+<section id="climate-change-and-agrriculture" class="level3">
+<h3 class="anchored" data-anchor-id="climate-change-and-agrriculture">Climate Change and Agrriculture</h3>
 
 
 </section>

@@ -1,6 +1,7 @@
 ---
 title: "Group Project: Agriculture in Turkey - Preprocessing"
 date: "19 November 2022"
+title-block-banner: "#008000"
 format:
   html:
     toc: true
@@ -8,6 +9,8 @@ format:
     toc-float: true
     number-sections: false
 ---
+
+![Tarım](tarim.jpg)
 
 ```{=html}
 <style>

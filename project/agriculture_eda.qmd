@@ -32,6 +32,21 @@ Agriculture in Turkey - EDA is the part 2 of the Group Project: Agriculture in T
 
 We start by  loading our dataset that we prepare in the **Group Project: Agriculture in Turkey - Preprocessing**
 
+
+
+#### Call necessary libraries
+
+```{r call_libraries, warning=  FALSE,  message = FALSE}
+#install.packages("readxl")
+library(readxl)
+library(lubridate)
+library(dplyr)
+library(tidyverse)
+library(ggplot2)
+library(tidyr)
+```
+
+
 ## Load the Data
 ```{r}
 # Prepare data

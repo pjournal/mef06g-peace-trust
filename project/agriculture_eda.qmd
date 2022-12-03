@@ -60,19 +60,6 @@ meyve <- readRDS("data//meyve.rds")
 sebze <- readRDS("data//sebze.rds")
 tahil <- readRDS("data//tahil.rds")
 ```
-## Questions 
-In this work, we seek to answer these questions;
-
-1. Are the areas we use for agriculture decreasing?
-
-2. What is the regional distribution of increases and decreases?
-
-3. Is our production amount decreasing?
-
-4. Is our production efficiency increasing?
-
-5. What will our agricultural production be in the future?
-
 
 ## Total Agriculture Areas 
 
@@ -134,9 +121,10 @@ knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010
 ```{r}
 
 df_p <- df_p %>%
-  arrange(TotalDifference)
+  arrange(TotalDifference) %>%
+  mutate(TotalDifference=TotalDifference*-1)
 
-ggplot(data=head(df_p,10), aes(x=province, y=-1*TotalDifference)) +
+ggplot(data=head(df_p,10), aes(x=province, y=TotalDifference)) +
   geom_bar(position="dodge",stat="identity") + 
   ggtitle("Total Agriculture Area Loss by Province 2010-2021 - Top 10 Province") +
   theme(text = element_text(size = 10),element_line(size =15),axis.text.x = element_text(angle = 90))
@@ -156,7 +144,8 @@ knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010
 df_o <- df_1 %>%
   group_by(province) %>%
   summarise('TotalYearlyDifferenceRate'=sum(difference_rate, na.rm=TRUE)) %>%
-  arrange(TotalYearlyDifferenceRate)
+  arrange(TotalYearlyDifferenceRate) %>%
+  mutate(TotalYearlyDifferenceRate=-1*TotalYearlyDifferenceRate)
 
 ggplot(head(df_o,10), aes(x=province, y=TotalYearlyDifferenceRate)) +
   geom_bar(position="dodge",stat="identity") + 
@@ -175,9 +164,14 @@ ggplot(head(df_o,10), aes(x=province, y=TotalYearlyDifferenceRate)) +
 
 ```{r warning=FALSE}
 
-total = sum(meyve[, 'production'],na.rm=TRUE)
+meyve_dekar <-
+  meyve %>% 
+  filter(str_trim(unit)=='Dekar')
 
-grouped_data <- meyve %>%
+
+total = sum(meyve_dekar[, 'production'],na.rm=TRUE)
+
+grouped_data <- meyve_dekar %>%
   group_by(product_name) %>%
   summarise(TotalbyName = sum(production,na.rm=TRUE)) %>%
   mutate(rate = round((TotalbyName/total)*100),2)
@@ -195,7 +189,7 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid  = element_blank())+ 
-  ggtitle("Top 10 Fruit Production in Turkey between 2010-2021")
+  ggtitle("Top 10 Fruit Production (Decare) in Turkey between 2010-2021")
 ```
 
 ### Vegetables
@@ -221,7 +215,7 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid  = element_blank())+ 
-  ggtitle("Top 10 Vegetable Production in Turkey  between 2010-2021")
+  ggtitle("Top 10 Vegetable Production (Decare) in Turkey  between 2010-2021")
 
 ```
 ### Grain
@@ -248,13 +242,87 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid  = element_blank())+ 
-  ggtitle("Top 10 Grain Production in Turkey between 2010-2021")
+  ggtitle("Top 10 Grain Production(Decare) in Turkey between 2010-2021")
 ```
+
+
+
+## Climate Indicators and Agrriculture Areas
+
+In this section we will compare the yearly average temperatures with the agriculture areas. Weather data is gathered from [TradingEconomics](https://tradingeconomics.com/turkey/temperature). 
+
+Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agriculrural area. Note that we need further statistical tests to show the relation between, this presentations only shows the raw data.
 
 ```{r}
+temperature = read_excel("data//temp.xlsx")
 
+
+df <- tarim %>%
+  group_by(year) %>%
+  summarise(TotalDecareNormalized=sum(decare)/ 20000000)
+
+
+df_t <- df %>%
+  inner_join(temperature)
+  
+ggplot(df_t, aes(year)) + 
+  geom_line(aes(y = TotalDecareNormalized, colour = "Total Decare (1/20000000)")) + 
+  geom_line(aes(y = temperature, colour = "Temperature")) +
+  ylab(NULL) +
+  ggtitle("Average Temperature vs Total Agricultural Area") 
+```
+CO2 emission is also an important metric for measuring the climate change. CO2 emissions (metric tons per capita)	Carbon dioxide emissions are those stemming from the burning of fossil fuels and the manufacture of cement. They include carbon dioxide produced during consumption of solid, liquid, and gas fuels and gas flaring.
+WorldBank launches the CO2 emissions (metric tons per capita) data for every country. I used [WorldBank](CO2 emissions (metric tons per capita) )
+
+Note that, Data consists of the CO2 emission for 2009-2019
+```{r warning=FALSE}
+co2 = read_excel("data//co2.xlsx")
+
+
+df_t$year<-as.character.Date(df_t$year)
+df_t_c <- df_t %>%
+  inner_join(co2, by='year')
+
+ggplot(df_t_c, aes(year)) + 
+  geom_line(aes(y = TotalDecareNormalized, colour = "Total Decare (1/20000000)", group=1)) + 
+  geom_line(aes(y = CO2emissions, colour = "CO2 Emission(Ton Per Capita)", group=2)) +
+  geom_line(aes(y = temperature, colour = "Temperature", group=3)) +
+  ylab(NULL) +
+  ggtitle("Average Temperature, CO2 Emission and Total Agricultural Area in Turkey")  
+
+```
+## Most efficient Fruits in Turkey
+
+Production in kg per tree is as follows, is seems Apple is the winner here too.
+
+```{r}
+df_e <- meyve %>%
+  filter(str_trim(unit)=='Kg/Meyve Veren Ağaç')%>%
+  group_by(product_name,unit) %>%
+  summarise(toplam = sum(production, na.rm = TRUE)) %>%
+  arrange(desc(toplam))
+
+knitr::kable(head(df_e),caption = "Fruit Efficiency (KG % Per Tree)")
+```
+Let's group all fruits containing "Elma" under the Elma.
+
+```{r}
+meyve_group <- meyve
+
+meyve_group$product_name <- gsub(".*Elma.*", "Elma", meyve$product_name)
+
+
+df_elma <- meyve_group %>%
+  filter(str_trim(unit)=='Kg/Meyve Veren Ağaç')%>%
+  group_by(product_name,unit) %>%
+  summarise(toplam = sum(production, na.rm = TRUE)) %>%
+  arrange(desc(toplam))
+
+ggplot(data=df_elma, aes(x=product_name, y=toplam)) +
+  geom_bar(position="dodge",stat="identity") + 
+  ggtitle("Fruit Efficiency (KG % Per Tree)") +
+  theme(text = element_text(size = 10),element_line(size =15),axis.text.x = element_text(angle = 90))
 
 ```
 
-### Climate Change and Agrriculture
 

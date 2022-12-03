@@ -24,6 +24,7 @@ format:
 knitr::opts_chunk$set(warning = FALSE)
 Sys.setlocale(locale = "en_US.UTF-8")
 options(dplyr.summarise.inform = FALSE)
+options(scipen=999)
 ```
 :::
 
@@ -42,8 +43,110 @@ tahil <- readRDS("data//tahil.rds")
 ## Questions 
 In this work, we seek to answer these questions;
 
-1- Are the areas we use for agriculture decreasing?
-2- What is the regional distribution of increases and decreases?
-3- Is our production amount decreasing?
-4- Is our production efficiency increasing?
-5- What will our agricultural production be in the future?
+1. Are the areas we use for agriculture decreasing?
+
+2. What is the regional distribution of increases and decreases?
+
+3. Is our production amount decreasing?
+
+4. Is our production efficiency increasing?
+
+5. What will our agricultural production be in the future?
+
+
+## Total Agriculture Areas 
+
+### Agriculture areas are shrinking slightly
+
+```{r}
+df <- tarim %>%
+  group_by(year) %>%
+  summarise(TotalDecare=sum(decare))
+
+ggplot(data=df, aes(x=year, y=TotalDecare)) +
+  geom_line() + 
+  ggtitle("Total Agriculture Areas(Decare) By Year")
+```
+
+
+### Yearly agriculture areas 
+
+Add previous decares to the dataframe
+```{r}
+df_1 <- tarim %>% 
+  arrange(province, year) %>% 
+  group_by(province) %>% 
+  mutate(prev_decare = lag(decare)) %>% 
+  ungroup()
+df_1
+```
+If we look at year by year lost, the biggest lost was in Sivas, 2011 with 2.290.480 decare loss.
+Second is Kars with 1.628.918, third is Konya with 1.526.849. However, Konya's total agriculture areas are greater than others. Rate of yearly difference and decare will be another indicator.
+
+```{r}
+df_1 <- df_1 %>%
+  mutate(difference = (decare-prev_decare))
+arrange(df_1, difference)
+```
+If we sort according to rate of difference Ardahan,2014 is the first with 0.7, Kars,2013 and Karabük,2018 are the second and Third in terms of yearly agriculture area lost. 
+```{r}
+df_1 <- df_1 %>%
+  mutate(rate_difference = difference/decare)
+arrange(df_1, rate_difference)
+
+```
+Interestingly, yearly loss is greater in the first half of the decade, but overall loss is increasing year by year, let's visualise this by adding cumulative loss column.
+
+If we look at total lost, Şanlıurda, Konya ans Sivas are the three big cities
+```{r}
+df_p <- df_1 %>%
+  group_by(province) %>%
+  summarise('TotalDifference'=sum(difference, na.rm=TRUE),'TotalRate'=sum(rate_difference, na.rm=TRUE)) %>%
+  arrange(TotalDifference)
+
+knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2022")
+
+```
+```{r}
+df_p <- df_p %>%
+  arrange(TotalRate)
+
+knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2022")
+
+```
+
+
+```{r}
+
+df_p <- df_p %>%
+  arrange(TotalDifference)
+
+ggplot(data=head(df_p,10), aes(x=province, y=-1*TotalDifference)) +
+  geom_bar(position="dodge",stat="identity") + 
+  ggtitle("Total Agriculture Area Loss by Province 2010-2022 - Top 10 Province") +
+  theme(text = element_text(size = 10),element_line(size =15),axis.text.x = element_text(angle = 90))
+
+
+```
+
+```{r}
+
+df_y <- df_1 %>%
+  group_by(year) %>%
+  summarise('TotalYearlyDifference'=sum(difference, na.rm=TRUE)) %>%
+  arrange(TotalYearlyDifference)
+
+ggplot(df_y, aes(x=year, y=TotalYearlyDifference*-1)) +
+  geom_bar(position="dodge",stat="identity") + 
+  ggtitle("Total Agriculture Area Loss by Year 2010-2022") +
+  theme(axis.text.x = element_text(angle = 90))
+
+
+```
+
+
+
+
+
+
+

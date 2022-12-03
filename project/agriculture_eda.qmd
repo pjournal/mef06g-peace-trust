@@ -1,0 +1,49 @@
+---
+title: "Group Project: Agriculture in Turkey - EDA"
+date: "19 November 2022"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-float: true
+    number-sections: false
+---
+
+```{=html}
+<style>
+    body { 
+    font-family: Calibri;
+    text-align: justify;
+    font-size: 11pt;
+    div.hidecode + pre {display: none}
+    }
+</style>
+```
+::: hidecode
+```{r setup, output=FALSE,echo=FALSE,warning = FALSE}
+knitr::opts_chunk$set(warning = FALSE)
+Sys.setlocale(locale = "en_US.UTF-8")
+options(dplyr.summarise.inform = FALSE)
+```
+:::
+
+Agriculture in Turkey - EDA is the part 2 of the Group Project: Agriculture in Turkey
+
+We start by  loading our dataset that we prepare in the **Group Project: Agriculture in Turkey - Preprocessing**
+
+## Load the Data
+```{r}
+# Prepare data
+tarim <- readRDS("data//tarim.rds")
+meyve <- readRDS("data//meyve.rds")
+sebze <- readRDS("data//sebze.rds")
+tahil <- readRDS("data//tahil.rds")
+```
+## Questions 
+In this work, we seek to answer these questions;
+
+1- Are the areas we use for agriculture decreasing?
+2- What is the regional distribution of increases and decreases?
+3- Is our production amount decreasing?
+4- Is our production efficiency increasing?
+5- What will our agricultural production be in the future?

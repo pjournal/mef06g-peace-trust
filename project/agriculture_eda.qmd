@@ -1,4 +1,4 @@
----
+  ---
 title: "Group Project: Agriculture in Turkey - EDA"
 date: "3 December 2022"
 title-block-banner: "#008000"
@@ -68,11 +68,11 @@ tahil <- readRDS("data//tahil.rds")
 ```{r}
 df <- tarim %>%
   group_by(year) %>%
-  summarise(TotalDecare=sum(decare))
+  summarise(TotalAgricultureDecare=sum(decare))
 
-ggplot(data=df, aes(x=year, y=TotalDecare)) +
+ggplot(data=df, aes(x=year, y=TotalAgricultureDecare)) +
   geom_line() + 
-  ylim(220000000,max(df$TotalDecare))+
+  ylim(220000000,max(df$TotalAgricultureDecare))+
   ggtitle("Total Agriculture Areas(Decare) By Year")
 
 ```
@@ -245,7 +245,23 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   ggtitle("Top 10 Grain Production(Decare) in Turkey between 2010-2021")
 ```
 
+### Total Grain Production Areas 
 
+Grain production areas are increasing slightly unlike agricultural areas
+
+```{r}
+df_gra <- tahil %>%
+  group_by(year)%>%
+  summarize(total_gra_decare = sum(decare, na.rm = TRUE)) %>%
+  mutate(prev_decare = lag(total_gra_decare)) %>%
+  mutate(diff_gra_rate = round((total_gra_decare-prev_decare)/total_gra_decare,2))
+
+ggplot(data=df_gra, aes(x=year, y=total_gra_decare)) + 
+  geom_line() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 3), se = FALSE) +
+  ggtitle("Total Agriculture Areas(Decare) By Year")
+
+```
 
 ## Climate Indicators and Agrriculture Areas
 

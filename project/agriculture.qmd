@@ -159,6 +159,12 @@ meyve$product_name <- gsub("[()]", "", meyve$product_name)
 sebze$product_name <- gsub("[()]", "", sebze$product_name)
 
 ```
+**Remove spaces at the beginning and at the end of the "unit" column**
+```{r}
+tahil$unit = str_trim(tahil$unit)
+sebze$unit = str_trim(sebze$unit)
+meyve$unit = str_trim(meyve$unit)
+```
 
 #### Check the Data Types
 

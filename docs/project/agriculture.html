@@ -1241,12 +1241,18 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>meyve<span class="sc">$</span>product_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[()]"</span>, <span class="st">""</span>, meyve<span class="sc">$</span>product_name)</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>sebze<span class="sc">$</span>product_name <span class="ot">&lt;-</span> <span class="fu">gsub</span>(<span class="st">"[()]"</span>, <span class="st">""</span>, sebze<span class="sc">$</span>product_name)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p><strong>Remove spaces at the beginning and at the end of the “unit” column</strong></p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tahil<span class="sc">$</span>unit <span class="ot">=</span> <span class="fu">str_trim</span>(tahil<span class="sc">$</span>unit)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>sebze<span class="sc">$</span>unit <span class="ot">=</span> <span class="fu">str_trim</span>(sebze<span class="sc">$</span>unit)</span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>meyve<span class="sc">$</span>unit <span class="ot">=</span> <span class="fu">str_trim</span>(meyve<span class="sc">$</span>unit)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
 </section>
 <section id="check-the-data-types" class="level4">
 <h4 class="anchored" data-anchor-id="check-the-data-types">Check the Data Types</h4>
 <p>view the data types</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tarim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(tarim)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [972 × 4] (S3: tbl_df/tbl/data.frame)
  $ province     : chr [1:972] "Adana" "Adana" "Adana" "Adana" ...
@@ -1256,13 +1262,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [103,530 × 8] (S3: tbl_df/tbl/data.frame)
  $ main_type    : chr [1:103530] "Ekilen Alan" "Ekilen Alan" "Ekilen Alan" "Ekilen Alan" ...
  $ product_code : chr [1:103530] "01.11.61.00.01." "01.11.61.00.02." "01.11.62.00.00." "01.11.69.00.01." ...
  $ product_name : chr [1:103530] "Fasulye, Taze " "Barbunya, Taze " "Bezelye, Taze " "Börülce, Taze " ...
- $ unit         : chr [1:103530] " Dekar" " Dekar" " Dekar" " Dekar" ...
+ $ unit         : chr [1:103530] "Dekar" "Dekar" "Dekar" "Dekar" ...
  $ province     : chr [1:103530] "Adana" "Adana" "Adana" "Adana" ...
  $ province_code: chr [1:103530] "1" "1" "1" "1" ...
  $ year         : chr [1:103530] "2010" "2010" "2010" "2010" ...
@@ -1270,13 +1276,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(sebze)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [103,530 × 8] (S3: tbl_df/tbl/data.frame)
  $ main_type    : chr [1:103530] "Ekilen Alan" "Ekilen Alan" "Ekilen Alan" "Ekilen Alan" ...
  $ product_code : chr [1:103530] "01.11.61.00.01." "01.11.61.00.02." "01.11.62.00.00." "01.11.69.00.01." ...
  $ product_name : chr [1:103530] "Fasulye, Taze " "Barbunya, Taze " "Bezelye, Taze " "Börülce, Taze " ...
- $ unit         : chr [1:103530] " Dekar" " Dekar" " Dekar" " Dekar" ...
+ $ unit         : chr [1:103530] "Dekar" "Dekar" "Dekar" "Dekar" ...
  $ province     : chr [1:103530] "Adana" "Adana" "Adana" "Adana" ...
  $ province_code: chr [1:103530] "1" "1" "1" "1" ...
  $ year         : chr [1:103530] "2010" "2010" "2010" "2010" ...
@@ -1284,13 +1290,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(meyve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">str</span>(meyve)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>tibble [297,675 × 8] (S3: tbl_df/tbl/data.frame)
  $ main_type    : chr [1:297675] "Meyve Veren Yaşta Ağaç Sayısı" "Meyve Veren Yaşta Ağaç Sayısı" "Meyve Veren Yaşta Ağaç Sayısı" "Meyve Veren Yaşta Ağaç Sayısı" ...
  $ product_code : chr [1:297675] "01.21.11.01.01." "01.21.11.01.01." "01.21.11.01.01." "01.21.11.01.01." ...
  $ product_name : chr [1:297675] "Sofralık Üzüm, Çekirdekli " "Sofralık Üzüm, Çekirdekli " "Sofralık Üzüm, Çekirdekli " "Sofralık Üzüm, Çekirdekli " ...
- $ unit         : chr [1:297675] " Adet Sayısı" " Adet Sayısı" " Adet Sayısı" " Adet Sayısı" ...
+ $ unit         : chr [1:297675] "Adet Sayısı" "Adet Sayısı" "Adet Sayısı" "Adet Sayısı" ...
  $ year         : chr [1:297675] "2010" "2010" "2010" "2010" ...
  $ province     : chr [1:297675] "Adana" "Adıyaman" "Afyonkarahisar" "Aksaray" ...
  $ province_code: chr [1:297675] "1" "2" "3" "68" ...
@@ -1302,56 +1308,56 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h4 class="anchored" data-anchor-id="convert-the-data-types">Convert the Data Types</h4>
 <p><strong>Convert Year column to Date type</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>tarim<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(tarim<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span>
-<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>tahil<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(tahil<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span>
-<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>meyve<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(meyve<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span>
-<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>sebze<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(sebze<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>tarim<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(tarim<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>tahil<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(tahil<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>meyve<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(meyve<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>sebze<span class="sc">$</span>year <span class="ot">&lt;-</span> <span class="fu">year</span>(<span class="fu">as.Date</span>(sebze<span class="sc">$</span>year, <span class="at">format =</span> <span class="st">"%Y"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 </section>
 <section id="check-missing-values" class="level4">
 <h4 class="anchored" data-anchor-id="check-missing-values">Check Missing values</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tarim))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tarim))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 0</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tahil));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(tahil));</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 190210</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(meyve))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(meyve))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 162452</code></pre>
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb29"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(sebze))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sum</span>(<span class="fu">is.na</span>(sebze))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 42723</code></pre>
 </div>
 </div>
 <p><strong>If we remove the NAs, we may miss the provinces where some agriculture products are not produced/ or TUIK cannot get any information. So we first check whether there are 0 values</strong></p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a>tahil <span class="sc">%&gt;%</span></span>
-<span id="cb31-2"><a href="#cb31-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decare<span class="sc">==</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a>tahil <span class="sc">%&gt;%</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(decare<span class="sc">==</span><span class="dv">0</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 475 × 8
    main_type         product_code    produc…¹ unit  provi…² provi…³  year decare
    &lt;chr&gt;             &lt;chr&gt;           &lt;chr&gt;    &lt;chr&gt; &lt;chr&gt;   &lt;chr&gt;   &lt;dbl&gt;  &lt;dbl&gt;
- 1 Ekilen Alan       01.19.31.09.00. "Yonca … " De… Afyonk… 3        2010      0
- 2 Hasat Edilen Alan 01.19.31.09.00. "Yonca … " De… Afyonk… 3        2010      0
- 3 Ekilen Alan       01.19.31.05.00. "Korung… " De… Aksaray 68       2010      0
- 4 Ekilen Alan       01.19.31.09.00. "Yonca … " De… Aksaray 68       2010      0
- 5 Hasat Edilen Alan 01.19.31.05.00. "Korung… " De… Aksaray 68       2010      0
- 6 Hasat Edilen Alan 01.19.31.09.00. "Yonca … " De… Aksaray 68       2010      0
- 7 Ekilen Alan       01.19.31.05.00. "Korung… " De… Ardahan 75       2010      0
- 8 Hasat Edilen Alan 01.19.31.05.00. "Korung… " De… Ardahan 75       2010      0
- 9 Ekilen Alan       01.19.31.05.00. "Korung… " De… Artvin  8        2010      0
-10 Ekilen Alan       01.19.31.09.00. "Yonca … " De… Artvin  8        2010      0
+ 1 Ekilen Alan       01.19.31.09.00. "Yonca … Dekar Afyonk… 3        2010      0
+ 2 Hasat Edilen Alan 01.19.31.09.00. "Yonca … Dekar Afyonk… 3        2010      0
+ 3 Ekilen Alan       01.19.31.05.00. "Korung… Dekar Aksaray 68       2010      0
+ 4 Ekilen Alan       01.19.31.09.00. "Yonca … Dekar Aksaray 68       2010      0
+ 5 Hasat Edilen Alan 01.19.31.05.00. "Korung… Dekar Aksaray 68       2010      0
+ 6 Hasat Edilen Alan 01.19.31.09.00. "Yonca … Dekar Aksaray 68       2010      0
+ 7 Ekilen Alan       01.19.31.05.00. "Korung… Dekar Ardahan 75       2010      0
+ 8 Hasat Edilen Alan 01.19.31.05.00. "Korung… Dekar Ardahan 75       2010      0
+ 9 Ekilen Alan       01.19.31.05.00. "Korung… Dekar Artvin  8        2010      0
+10 Ekilen Alan       01.19.31.09.00. "Yonca … Dekar Artvin  8        2010      0
 # … with 465 more rows, and abbreviated variable names ¹​product_name,
 #   ²​province, ³​province_code</code></pre>
 </div>
@@ -1361,7 +1367,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="view-the-datasets" class="level4">
 <h4 class="anchored" data-anchor-id="view-the-datasets">View the Datasets</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb33"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb33-1"><a href="#cb33-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tarim),<span class="at">caption =</span> <span class="st">"12-year agricultural area by province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tarim),<span class="at">caption =</span> <span class="st">"12-year agricultural area by province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>12-year agricultural area by province</caption>
@@ -1415,7 +1421,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(meyve,<span class="at">caption =</span> <span class="st">"12-year fruit production by province"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(meyve,<span class="at">caption =</span> <span class="st">"12-year fruit production by province"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <colgroup>
@@ -1506,7 +1512,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(sebze),<span class="at">caption =</span> <span class="st">"12-year vegetable production by province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(sebze),<span class="at">caption =</span> <span class="st">"12-year vegetable production by province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>12-year vegetable production by province</caption>
@@ -1598,7 +1604,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </div>
 </div>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tahil),<span class="at">caption =</span> <span class="st">"12-year grain production by province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(tahil),<span class="at">caption =</span> <span class="st">"12-year grain production by province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 <table class="table table-sm table-striped">
 <caption>12-year grain production by province</caption>
@@ -1693,10 +1699,10 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="save-the-final-datasets" class="level4">
 <h4 class="anchored" data-anchor-id="save-the-final-datasets">Save the final datasets</h4>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb37"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tarim, <span class="at">file =</span> <span class="st">"data//tarim.rds"</span>)</span>
-<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tahil, <span class="at">file =</span><span class="st">"data//tahil.rds"</span>)</span>
-<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(meyve, <span class="at">file =</span><span class="st">"data//meyve.rds"</span>)</span>
-<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(sebze, <span class="at">file =</span><span class="st">"data//sebze.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tarim, <span class="at">file =</span> <span class="st">"data//tarim.rds"</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(tahil, <span class="at">file =</span><span class="st">"data//tahil.rds"</span>)</span>
+<span id="cb38-3"><a href="#cb38-3" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(meyve, <span class="at">file =</span><span class="st">"data//meyve.rds"</span>)</span>
+<span id="cb38-4"><a href="#cb38-4" aria-hidden="true" tabindex="-1"></a><span class="fu">saveRDS</span>(sebze, <span class="at">file =</span><span class="st">"data//sebze.rds"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 
 

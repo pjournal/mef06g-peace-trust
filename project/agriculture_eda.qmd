@@ -1,4 +1,4 @@
-  ---
+---
 title: "Group Project: Agriculture in Turkey - EDA"
 date: "3 December 2022"
 title-block-banner: "#008000"
@@ -95,15 +95,18 @@ Second is Kars with 1.628.918, third is Konya with 1.526.849. However, Konya's t
 
 ```{r}
 df_1 <- df_1 %>%
-  mutate(difference = (decare-prev_decare))
-arrange(df_1, difference)
+  mutate(difference = (decare-prev_decare))%>%
+  arrange(desc(-1*difference))
+
 head(df_1)
 ```
-If we sort according to rate of difference Ardahan,2014 is the first with 0.7, Kars,2013 and Karabük,2018 are the second and Third in terms of yearly agriculture area lost. 
+If we sort according to rate of difference Ardahan,2014 is the first with 0.79, Kars,2013 and Karabük,2018 are the second and Third in terms of yearly agriculture area lost. 
 ```{r}
 df_1 <- df_1 %>%
   mutate(difference_rate = round(difference/decare,2))%>%
-  arrange(df_1, difference_rate)
+  arrange((difference_rate))
+
+
 head(df_1)
 ```
 Interestingly, yearly loss is greater in the first half of the decade, but overall loss is increasing year by year, let's visualise this by adding cumulative loss column.
@@ -166,7 +169,7 @@ ggplot(head(df_o,10), aes(x=province, y=TotalYearlyDifferenceRate)) +
 
 meyve_dekar <-
   meyve %>% 
-  filter(str_trim(unit)=='Dekar')
+  filter(year==2021 & unit=='Dekar')
 
 
 total = sum(meyve_dekar[, 'production'],na.rm=TRUE)
@@ -189,18 +192,23 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid  = element_blank())+ 
-  ggtitle("Top 10 Fruit Production (Decare) in Turkey between 2010-2021")
+  labs(x ="",y="") +
+  ggtitle("Top 10 Fruit Products (in Decare) in Turkey in 2021")
 ```
 
 ### Vegetables
 ```{r warning=FALSE}
 
-total = sum(sebze[, 'decare'],na.rm=TRUE)
+sebze_df <- sebze %>%
+  filter(year==2021 & unit=='Dekar')
+
+total = sum(sebze_df [, 'decare'],na.rm=TRUE)
 
 grouped_data <- sebze %>%
+  filter(year==2021 & unit=='Dekar') %>%
   group_by(product_name) %>%
   summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
-  mutate(rate = round((TotalbyName/total)*100),2)
+  mutate(rate = round((TotalbyName/total)*100),4)
 
 plot_data <- grouped_data %>%
   mutate(rank = rank(-TotalbyName), 
@@ -215,16 +223,19 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid  = element_blank())+ 
-  ggtitle("Top 10 Vegetable Production (Decare) in Turkey  between 2010-2021")
+  labs(x ="",y="") +
+  ggtitle("Top 10 Vegetable Products (in Decare) in Turkey  in 2021")
 
 ```
 ### Grain
 ```{r warning=FALSE}
+tahil_df <-  tahil %>%
+  filter(year==2021 & unit=='Dekar')
 
-
-total = sum(tahil[, 'decare'],na.rm=TRUE)
+total = sum(tahil_df[, 'decare'],na.rm=TRUE)
 
 grouped_data <- tahil %>%
+  filter(year==2021 & unit=='Dekar') %>%
   group_by(product_name) %>%
   summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
   mutate(rate = round((TotalbyName/total)*100),2)
@@ -242,15 +253,17 @@ ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
   theme(axis.text = element_blank(),
         axis.ticks = element_blank(),
         panel.grid  = element_blank())+ 
-  ggtitle("Top 10 Grain Production(Decare) in Turkey between 2010-2021")
+   labs(x ="",y="") +
+  ggtitle("Top 10 Grain Products(as Decare) in Turkey in 2021")
 ```
 
-### Total Grain Production Areas 
+### Yearly Grain/Fruit/Vegetable Production Areas 
 
-Grain production areas are increasing slightly unlike agricultural areas
+Grain production areas were decreasing until 2019, after 2019, it is increasing slightly like agricultural areas
 
 ```{r}
 df_gra <- tahil %>%
+  filter(unit=='Dekar') %>%
   group_by(year)%>%
   summarize(total_gra_decare = sum(decare, na.rm = TRUE)) %>%
   mutate(prev_decare = lag(total_gra_decare)) %>%
@@ -259,9 +272,68 @@ df_gra <- tahil %>%
 ggplot(data=df_gra, aes(x=year, y=total_gra_decare)) + 
   geom_line() +
   geom_smooth(method = "lm", formula = y ~ poly(x, 3), se = FALSE) +
-  ggtitle("Total Agriculture Areas(Decare) By Year")
+  labs(x ="Year",y="Decare") +
+  ggtitle("Total Grain Agriculture Areas(Decare) Between 2010-2021")
 
 ```
+Fruit production areas are increasing slightly unlike agricultural areas
+
+```{r}
+
+df_meyve <- meyve %>%
+  filter(unit=='Dekar') %>%
+  group_by(year)%>%
+  summarize(total_gra_decare = sum(production, na.rm = TRUE)) %>%
+  mutate(prev_decare = lag(total_gra_decare)) %>%
+  mutate(diff_gra_rate = round((total_gra_decare-prev_decare)/total_gra_decare,2))
+
+ggplot(data=df_meyve, aes(x=year, y=total_gra_decare)) + 
+  geom_line() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 3), se = FALSE) +
+  labs(x ="Year",y="Decare") +
+  ggtitle("Total Fruit Agriculture Areas(Decare) Between 2010-2021")
+
+```
+```{r}
+meyve_sort <- meyve %>% arrange(year)
+
+meyve_analiz <- meyve_sort %>%
+  filter(unit=='Dekar') %>%
+  group_by(year,product_name)%>%
+  summarize(total_decare = sum(production, na.rm = TRUE)) %>%
+  arrange(product_name,year) %>%
+  ungroup() 
+
+
+meyve_sort_analiz <- meyve_analiz %>%
+  mutate(prev_dekar=lag(total_decare))  %>%
+  mutate(difference_with_prev_year =total_decare-prev_dekar ) %>%
+  filter(year>2010) %>%
+  arrange(desc(difference_with_prev_year))
+
+knitr::kable(head(meyve_sort_analiz),caption = "The Top Fruits in Terms of Yearly Increased Agricultural Areas ")
+
+
+```
+
+
+```{r}
+
+df_sebze <- sebze %>%
+  filter(unit=='Dekar') %>%
+  group_by(year)%>%
+  summarize(total_gra_decare = sum(decare, na.rm = TRUE)) %>%
+  mutate(prev_decare = lag(total_gra_decare)) %>%
+  mutate(diff_gra_rate = round((total_gra_decare-prev_decare)/total_gra_decare,2))
+
+ggplot(data=df_sebze, aes(x=year, y=total_gra_decare)) + 
+  geom_line() +
+  geom_smooth(method = "lm", formula = y ~ poly(x, 3), se = FALSE) +
+  labs(x ="Year",y="Decare") +
+  ggtitle("Total Vegetable Agriculture Areas(Decare) Between 2010-2021")
+
+```
+**Above analysis show that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production**
 
 ## Climate Indicators and Agrriculture Areas
 

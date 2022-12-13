@@ -59,6 +59,7 @@ tarim <- readRDS("data//tarim.rds")
 meyve <- readRDS("data//meyve.rds")
 sebze <- readRDS("data//sebze.rds")
 tahil <- readRDS("data//tahil.rds")
+regions <- readRDS("data//Regions.rds")
 ```
 
 ## Total Agriculture Areas 
@@ -80,6 +81,8 @@ Between 2010-2011, biggest agricultural area lost is happened. In 2011-2015, it 
 However, after 2015, general trend moves towards to losing the Agricultural areas, after 2019 there seems to be first improvement, interestingly first improvement is in 2020, "the pandemic year" but in general in 11 years, size of the agricultural areas moving downwards.
 
 ### Yearly agriculture areas 
+
+#### By Province
 
 Add previous decares to the dataframe
 ```{r}
@@ -156,6 +159,56 @@ ggplot(head(df_o,10), aes(x=province, y=TotalYearlyDifferenceRate)) +
   theme(axis.text.x = element_text(angle = 90))
 
 
+```
+#### By Region
+Adding regions to tarim data
+```{r}
+df_r<- merge(x=tarim,y=regions,by="province",all.x = TRUE)
+df_region<- df_r%>% select(region,year,decare) %>% 
+                        group_by(region,year) %>% 
+                          summarise(Total_Agriarea_in_the_Region=sum(decare))
+df_region %>% head()                      
+```
+Add previous decares to the dataframe
+```{r}
+df_region_1<- df_region %>% 
+               arrange(region,year) %>% 
+                group_by(region) %>% 
+                 mutate(prev_decare= lag(Total_Agriarea_in_the_Region)) %>% 
+                   ungroup()
+head(df_region_1)
+```
+  If we look at year by year lost, İç Anadolu had the biggest loses in 2011 and 2017. However İç Anadolu' total agricultural lands also high as compared to other regions so looking rate of yearly difference would be good indicator to analyze.
+
+```{r}
+df_region_1 <- df_region_1 %>% 
+       mutate(difference=(Total_Agriarea_in_the_Region-prev_decare)) %>% 
+         arrange((desc(-1*difference)))
+df_region_1
+```
+Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, "Büyüksehir Yasası" that enacted in the 2012 can be cause of this situation.
+```{r}
+df_region_1 <- df_region_1 %>% 
+          mutate(difference_rate=round(difference/Total_Agriarea_in_the_Region,2)) %>% 
+                   arrange((difference_rate))
+head(df_region_1)
+```
+Let's look at the overall lose between 2010-2021 by region.In this case some regions interestingly increase their agricultural lands
+```{r}
+df_region_overall <- df_region_1 %>% 
+                      group_by(region) %>% 
+                         summarise("Total_Difference"=sum(difference,na.rm=TRUE),"Total_Rate"=sum(difference_rate,na.rm = TRUE)) %>%                             arrange(Total_Rate)
+knitr::kable(df_region_overall,caption = "Total Agriculre Lost Areas by Region 2010-2021")
+```
+
+Visualization...
+
+
+```{r}
+ggplot(data=df_region_overall,aes(x=region,y=Total_Difference,fill=region))+
+  geom_bar(position = "dodge",stat="identity")+
+  ggtitle("Total Agriculture Area Loss by Region 2010-2021")+
+  theme(text = element_text(size=10),element_line(size=15),axis.text.x=element_text(angle=90))
 ```
 
 

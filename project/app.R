@@ -18,24 +18,49 @@ ui <- fluidPage(
       radioButtons("dataset", label = "Choose Data", 
                    choices = c("Tarım"=1,"Meyve"=2,"Sebze"=3,"Tahıl"=4), inline = T),
       
-      selectInput("region", "Region:", sort(unique(meyve$province))),
+
       selectInput("province", "Province:", sort(unique(meyve$province))),
       selectInput("main_type", "Main Type:", sort(unique(meyve$main_type))),
       selectInput("product_name", "Product Name:", sort(unique(meyve$product_name))),
-      selectInput("Year", "Year:", c(2010:2021)),
-  
-    dataTableOutput("table")
+
+      plotOutput("plot"),
+      # Add data table
+      dataTableOutput("table")
+
   )
 
-# Define server logic
 server <- function(input, output) {
-  
-  # Filter data based on user input
-  filtered_data <- reactive({
-    meyve %>% 
-      filter(province == input$province, year == input$year,main_type == input$main_type,product_name == input$product_name)
+  # Update choices in dropdown box based on selected dataset
+  observe({
+    if (input$dataset == 1) {
+      updateSelectInput(session, "province", choices = names(tarim))
+    } else if (input$dataset == 2) {
+      updateSelectInput(session, "province", choices = names(meyve))
+    } else if (input$dataset == 3) {
+      updateSelectInput(session, "province", choices = names(sebze))
+    } else if (input$dataset == 4) {
+      updateSelectInput(session, "province", choices = names(tahil))
+    } 
   })
   
+  # Render plot
+  output$plot <- renderPlot({
+    # Use input$dataset to determine which dataset to use
+    if (input$dataset == 1) {
+      data <- tarım
+    } else if (input$dataset == 2) {
+      data <- meyve
+    } else if (input$dataset == 3) {
+      data <- sebze
+    } else if (input$dataset == 4) {
+      data <- tahıl
+    } 
+    
+    # Use input$x to determine which variable to plot on the x-axis
+    plot(data[, input$year], main = input$year)
+  })
+  
+  # Render data table
   output$table <- renderDataTable({
     # Use input$dataset to determine which dataset to display
     if (input$dataset == 1) {

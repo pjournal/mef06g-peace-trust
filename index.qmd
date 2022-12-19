@@ -21,9 +21,9 @@ Each section is an assignment or an individual work.
 Our group project is **Agriculture in Turkey** - Agriculture in Turkey based on TUIK data 
 
 
-- [Data Preprocessing](agriculture.html)
+- [Data Preprocessing](https://pjournal.github.io/mef06g-peace-trust/project/agriculture.html)
 
-- [Exploratory Data Analysis](agriculture_eda.html)
+- [Exploratory Data Analysis](https://pjournal.github.io/mef06g-peace-trust/project/agriculture_eda.html)
 
 - Final Report
   - [HTML Format](FinalReport.html) will be added

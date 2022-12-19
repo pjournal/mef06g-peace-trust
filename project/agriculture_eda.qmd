@@ -42,6 +42,8 @@ We start by  loading our dataset that we prepare in the **Group Project: Agricul
 ```{r call_libraries, warning=  FALSE,  message = FALSE}
 #install.packages("readxl")
 #install.packages("ggrepel")
+#install.packages("plotly")
+library(plotly)
 library(readxl)
 library(lubridate)
 library(dplyr)
@@ -137,26 +139,36 @@ ggplot(data=head(df_p,10), aes(x=province, y=TotalDifference)) +
 
 
 ```
-**Zonguldak lost almost half of the agricultural areas in 11 years**
+**Zonguldak lost 35% of its agricultural areas in 12 years**
 
 ```{r}
-df_p <- df_p %>%
-  arrange(TotalRate)
+df_2010 <- df_1 %>% 
+  filter(year == 2010) %>%
+  select(province,year,decare)
 
-knitr::kable(head(df_p),caption = "Total Agriculture Lost Areas by Province 2010-2021")
+df_2021 <- df_1 %>% 
+  filter(year == 2021) %>%
+  select(province,year,decare)
+
+df_join <- inner_join(df_2010,df_2021, by = "province")
+
+df_ttrate <- df_join %>%
+  mutate(totaldiffrate = 100*(decare.y-decare.x)/decare.x) %>%
+  arrange((totaldiffrate)) %>%
+  select (province,totaldiffrate )
+
+knitr::kable(head(df_ttrate),caption = "Total Agriculture Lost Areas Rate by Province 2010-2021")
 
 ```
-```{r}
-df_o <- df_1 %>%
-  group_by(province) %>%
-  summarise('TotalYearlyDifferenceRate'=sum(difference_rate, na.rm=TRUE)) %>%
-  arrange(TotalYearlyDifferenceRate) %>%
-  mutate(TotalYearlyDifferenceRate=-1*TotalYearlyDifferenceRate)
 
-ggplot(head(df_o,10), aes(x=province, y=TotalYearlyDifferenceRate)) +
+```{r}
+
+ggplot(head(df_ttrate,10), aes(x=province, y=-1*totaldiffrate)) +
   geom_bar(position="dodge",stat="identity") + 
-  ggtitle("Total Agriculture Area Loss Rate by Province 2010-2021") +
-  theme(axis.text.x = element_text(angle = 90))
+  ggtitle("Total Agriculture Area Loss Rate by Province 2010-2021 (Top 10 Province)") +
+  theme(axis.text.x = element_text(angle = 90)) +
+   ylab("Agricultural Area Loss Rate(%)")
+ 
 
 
 ```
@@ -230,23 +242,22 @@ total = sum(meyve_dekar[, 'production'],na.rm=TRUE)
 grouped_data <- meyve_dekar %>%
   group_by(product_name) %>%
   summarise(TotalbyName = sum(production,na.rm=TRUE)) %>%
-  mutate(rate = round((TotalbyName/total)*100),2)
+  mutate(rate = round((TotalbyName/total)*100,4))
 
 plot_data <- grouped_data %>%
   mutate(rank = rank(-TotalbyName), 
          product_name = ifelse(rank <= 10, product_name, 'Other'))
 
-ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) + 
-  geom_label_repel(data = plot_data,
-                   aes(y = rate, label = paste0(product_name, rate,"%")),
-                   size = 5, nudge_x = 1, show.legend = FALSE) +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        panel.grid  = element_blank())+ 
-  labs(x ="",y="") +
-  ggtitle("Top 10 Fruit Products (in Decare) in Turkey in 2021")
+plot_data
+```
+
+```{r}
+p <- plot_ly(plot_data, labels = ~product_name, values = ~TotalbyName, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
+  layout(title = 'Top 10 Fruit Products (in Decare) in Turkey  in 2021',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+p
 ```
 
 ### Vegetables
@@ -263,23 +274,23 @@ grouped_data <- sebze %>%
   summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
   mutate(rate = round((TotalbyName/total)*100),4)
 
-plot_data <- grouped_data %>%
+plot_data_v <- grouped_data %>%
   mutate(rank = rank(-TotalbyName), 
          product_name = ifelse(rank <= 10, product_name, 'Other'))
 
-ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) + 
-  geom_label_repel(data = plot_data,
-                   aes(y = rate, label = paste0(product_name, rate,"%")),
-                   size = 5, nudge_x = 1, show.legend = FALSE) +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        panel.grid  = element_blank())+ 
-  labs(x ="",y="") +
-  ggtitle("Top 10 Vegetable Products (in Decare) in Turkey  in 2021")
+```
+
+```{r}
+
+p <- plot_ly(plot_data_v, labels = ~product_name, values = ~TotalbyName, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
+  layout(title = 'Top 10 Vegetable Products (in Decare) in Turkey  in 2021',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+p
 
 ```
+
 ### Grain
 ```{r warning=FALSE}
 tahil_df <-  tahil %>%
@@ -293,21 +304,19 @@ grouped_data <- tahil %>%
   summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
   mutate(rate = round((TotalbyName/total)*100),2)
 
-plot_data <- grouped_data %>%
+plot_data_g <- grouped_data %>%
   mutate(rank = rank(-TotalbyName), 
          product_name = ifelse(rank <= 10, product_name, 'Other'))
 
-ggplot(plot_data, aes(x="", y=rate, fill=product_name)) +
-  geom_bar(stat="identity", width=1) +
-  coord_polar("y", start=0) + 
-  geom_label_repel(data = plot_data,
-                   aes(y = rate, label = paste0(product_name, rate,"%")),
-                   size = 5, nudge_x = 1, show.legend = FALSE) +
-  theme(axis.text = element_blank(),
-        axis.ticks = element_blank(),
-        panel.grid  = element_blank())+ 
-   labs(x ="",y="") +
-  ggtitle("Top 10 Grain Products(as Decare) in Turkey in 2021")
+```
+
+```{r}
+p <- plot_ly(plot_data_g, labels = ~product_name, values = ~TotalbyName, type = 'pie',textposition = 'outside',textinfo = 'label+percent') %>%
+  layout(title = 'Top 10 Grain Products(as Decare) in Turkey in 2021',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+p
 ```
 
 ### Yearly Grain/Fruit/Vegetable Production Areas 
@@ -392,8 +401,6 @@ ggplot(data=df_sebze, aes(x=year, y=total_gra_decare)) +
 
 In this section we will compare the yearly average temperatures with the agriculture areas. Weather data is gathered from [TradingEconomics](https://tradingeconomics.com/turkey/temperature). 
 
-Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agriculrural area. Note that we need further statistical tests to show the relation between, this presentations only shows the raw data.
-
 ```{r}
 temperature = read_excel("data//temp.xlsx")
 
@@ -412,6 +419,28 @@ ggplot(df_t, aes(year)) +
   ylab(NULL) +
   ggtitle("Average Temperature vs Total Agricultural Area") 
 ```
+Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agriculrural area. Note that we need further statistical tests to show the relation between, this presentations only shows the raw data. However, 
+*there are evidences suggesting that rising temperatures due to climate change can have negative impacts on agriculture, including crop yields and the productivity of livestock. 
+
+*Higher temperatures can lead to more frequent heatwaves, which can stress plants and animals and reduce their growth and productivity. 
+
+*In addition, higher temperatures can also lead to more frequent and severe droughts, which can reduce crop yields and increase the risk of wildfires. 
+
+*Higher temperatures can also create conditions that are more favorable for pests and diseases, which can further reduce crop yields. 
+
+There are many resources about the relation between agricultural area loss and higher temperatures:
+
+
+*The Intergovernmental Panel on Climate Change (IPCC) is an international body that assesses the science related to climate change. The IPCC's Fifth Assessment Report, which was published in 2013, includes a chapter on "Agriculture, Forestry and Other Land Use," which discusses the impacts of climate change on agriculture. You can find the report here: https://www.ipcc.ch/report/ar5/wg2/
+
+*The United States Department of Agriculture (USDA) has a Climate Hubs program that aims to provide farmers, ranchers, and forest landowners with information and tools to help them adapt to the impacts of climate change. The USDA's Climate Hubs website includes a section on "Agriculture and Climate Change," which discusses the impacts of rising temperatures on agriculture in the United States: https://www.climatehubs.oce.usda.gov/topics/agriculture-and-climate-change
+
+*The United Nations Food and Agriculture Organization (FAO) is an organization that works to improve the food security and nutrition of people around the world. The FAO's website includes a section on "Climate Change and Agriculture," which discusses the impacts of rising temperatures on agriculture and offers resources and information for farmers and other stakeholders: http://www.fao.org/climatechange/en/
+
+
+
+
+
 CO2 emission is also an important metric for measuring the climate change. CO2 emissions (metric tons per capita)	Carbon dioxide emissions are those stemming from the burning of fossil fuels and the manufacture of cement. They include carbon dioxide produced during consumption of solid, liquid, and gas fuels and gas flaring.
 WorldBank launches the CO2 emissions (metric tons per capita) data for every country. I used [WorldBank](CO2 emissions (metric tons per capita) )
 
@@ -432,6 +461,11 @@ ggplot(df_t_c, aes(year)) +
   ggtitle("Average Temperature, CO2 Emission and Total Agricultural Area in Turkey")  
 
 ```
+* There is a complex relationship between agricultural loss and CO2 emissions. On the one hand, agriculture is a significant contributor to global CO2 emissions, through activities such as the use of fossil fuels for irrigation and transportation, and the cultivation of livestock. Reducing CO2 emissions from agriculture can help mitigate the impacts of climate change and reduce the risk of agricultural loss.
+
+The Intergovernmental Panel on Climate Change (IPCC) is an international body that assesses the science related to climate change. The IPCC's Fifth Assessment Report, which was published in 2013, includes a chapter on "Agriculture, Forestry and Other Land Use," which discusses the impacts of climate change on agriculture, including the relationship between CO2 emissions and agricultural loss. You can find the report here: https://www.ipcc.ch/report/ar5/wg2/
+
+
 ## Most efficient Fruits in Turkey
 
 Production in kg per tree is as follows, is seems Apple is the winner here too.

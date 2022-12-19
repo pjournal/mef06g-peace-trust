@@ -19,3 +19,17 @@ Each section is an assignment or an individual work.
 # Group Project Details
 
 Our group project is **Agriculture in Turkey** - Agriculture in Turkey based on TUIK data 
+
+
+- [Data Preprocessing](agriculture.html)
+
+- [Exploratory Data Analysis](agriculture_eda.html)
+
+- Final Report
+  - [HTML Format](FinalReport.html) will be added
+  - [PDF Format](FinalReport.pdf) will be added
+- Final Presentation
+  - [Teaser](https://youtu.be/V_GM-XeqMcc) will be added
+  - [HTML Format](FinalPresentation.html) will be added
+  - [PDF Format](FinalPresentation.pdf) will be added
+- [Shiny App](https://yudum.shinyapps.io/project_shiny_app/) will be added

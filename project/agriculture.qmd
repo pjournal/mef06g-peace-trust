@@ -30,20 +30,20 @@ options(dplyr.summarise.inform = FALSE)
 ```
 :::
 
-## BUSISNESS PROBLEM 
+## BUSINESS PROBLEM 
 
 Agricultural production plays a key role in the independence and development of a country. In this project, we aim to analyze the changes in our agricultural production areas and products over the years and obtain output in Turkey.
 
 ## DATA DESCRIPTION 
 
-Data is gathered from [TUIK Agriculture Data](https://data.tuik.gov.tr/Kategori/GetKategori?p=tarim-111&dil=2)
+Data is gathered from [TUIK Agriculture Data](https://biruni.tuik.gov.tr/medas/?kn=92&locale=tr)
 
 There are various different types of Agriculture data in TUIK. Datasets that we will use are:
 
-* 12-year agricultural area by province
-* 12-year grain production by province
-* 12-year vegetable production by province
-* 12-year fruit production by province
+* [12-year agricultural area by province](https://github.com/pjournal/mef06g-peace-trust/raw/main/project/data/tarım.xlsx)
+* [12-year grain production by province](https://github.com/pjournal/mef06g-peace-trust/raw/main/project/data/tahıl.xlsx)
+* [12-year vegetable production by province](https://github.com/pjournal/mef06g-peace-trust/raw/main/project/data/sebze.xlsx)
+* [12-year fruit production by province](https://github.com/pjournal/mef06g-peace-trust/raw/main/project/data/meyve.xlsx)
 
 ## PREPROCESS
 

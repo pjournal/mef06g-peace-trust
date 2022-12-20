@@ -18,17 +18,14 @@ Each section is an assignment or an individual work.
 
 # Group Project Details
 
-Our group project is **Agriculture in Turkey** - Agriculture in Turkey based on TUIK data 
+Our group project is **Agriculture in Turkey** based on TUIK data 
 
 
 - [Data Preprocessing](https://pjournal.github.io/mef06g-peace-trust/project/agriculture.html)
 
 - [Exploratory Data Analysis](https://pjournal.github.io/mef06g-peace-trust/project/agriculture_eda.html)
 
-- Final Report
-  - [HTML Format](https://pjournal.github.io/mef06g-peace-trust/project/report.html) 
-  - [Teaser](https://youtu.be/V_GM-XeqMcc) will be added
-
+- [Final Report](https://pjournal.github.io/mef06g-peace-trust/project/report.html)
   
 - [Shiny App](https://44zj2p-yudum-pa0in.shinyapps.io/project/) 
 

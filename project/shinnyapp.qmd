@@ -1,0 +1,32 @@
+---
+title: "Group Project: Agriculture in Turkey - Shinny App"
+date: "26 November 2022"
+format:
+  html:
+    toc: true
+    toc-depth: 3
+    toc-float: true
+    number-sections: false
+---
+
+```{=html}
+<style>
+    body { 
+    font-family: Calibri;
+    text-align: justify;
+    font-size: 11pt;
+    div.hidecode + pre {display: none}
+    }
+</style>
+```
+In this part, a shinny web application is developed with the [TUIK Agriculture Data](https://biruni.tuik.gov.tr/medas/?kn=92&locale=tr)
+
+
+#### [Click Here for the Shinny Web Application](https://44zj2p-yudum-pa0in.shinyapps.io/project/)
+
+#### Here is the Command Line for the Shinny Web Application:
+```{r eval=FALSE}
+shiny::runGitHub("pjournal/mef06g-peace-trust",subdir="/project/app.R")
+```
+
+

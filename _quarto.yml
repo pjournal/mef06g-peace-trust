@@ -12,6 +12,7 @@ book:
     - project/agriculture.qmd
     - project/agriculture_eda.qmd
     - project/report.qmd
+    - project/shinnyapp.qmd
   page-footer: 
     center: "[MEF BDA 503](https://mef-bda503.github.io)" 
   sharing: [twitter, facebook]

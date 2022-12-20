@@ -39,7 +39,7 @@ Agriculture in Turkey - EDA is the part 2 of the Group Project: Agriculture in T
 
 Key takeaways of the report as follows;
 
-1. In Turkey, **9.213.278 decare** agricultural areas is lost in last 12 years. However, after 2019 agricultural areas start to increase, interestingly first improvement is in 2020, “the pandemic year” but in general in 11 years, size of the agricultural areas moving downwards. 
+1. In Turkey, **9.213.278 decare** agricultural areas is lost in last 12 years. However, after 2019 agricultural areas start to increase, interestingly first improvement is in 2020, “the pandemic year” but in general in 12 years, size of the agricultural areas moving downwards. 
 
 2. When we look at provinces of Turkey, **Şanlıurfa** (2.145.906), **Konya**(2.058.950) and **Sivas**s(1.771.190) lost biggest agricultural areas.In terms of lost rate, **Zonguldak** has the greatest lost, the city lost %35 of its agricultural areas in 12 years.
 

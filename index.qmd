@@ -26,12 +26,9 @@ Our group project is **Agriculture in Turkey** - Agriculture in Turkey based on 
 - [Exploratory Data Analysis](https://pjournal.github.io/mef06g-peace-trust/project/agriculture_eda.html)
 
 - Final Report
-  - [HTML Format](FinalReport.html) will be added
-  - [PDF Format](FinalReport.pdf) will be added
-- Final Presentation
+  - [HTML Format](https://pjournal.github.io/mef06g-peace-trust/project/report.html) 
   - [Teaser](https://youtu.be/V_GM-XeqMcc) will be added
-  - [HTML Format](FinalPresentation.html) will be added
-  - [PDF Format](FinalPresentation.pdf) will be added
+
   
 - [Shiny App](https://44zj2p-yudum-pa0in.shinyapps.io/project/) 
 

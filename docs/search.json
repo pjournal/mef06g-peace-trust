@@ -4,7 +4,7 @@
     "href": "index.html",
     "title": "Peace and Trust Progress Journal",
     "section": "",
-    "text": "Group Members\n\nYudum Paçin\n\nFazlı Mengü Aydın\nMuhammed Ali Gökmen\nSabri Demirdal\nGizem Erdoğan\n\n\n\nGroup Project Details\nOur group project is Agriculture in Turkey - Agriculture in Turkey based on TUIK data\n\nData Preprocessing\nExploratory Data Analysis\nFinal Report\n\nHTML Format will be added\nPDF Format will be added\n\nFinal Presentation\n\nTeaser will be added\nHTML Format will be added\nPDF Format will be added\n\nShiny App will be added"
+    "text": "Group Members\n\nYudum Paçin\n\nFazlı Mengü Aydın\nMuhammed Ali Gökmen\nSabri Demirdal\nGizem Erdoğan\n\n\n\nGroup Project Details\nOur group project is Agriculture in Turkey - Agriculture in Turkey based on TUIK data\n\nData Preprocessing\nExploratory Data Analysis\nFinal Report\n\nHTML Format will be added\nPDF Format will be added\n\nFinal Presentation\n\nTeaser will be added\nHTML Format will be added\nPDF Format will be added\n\nShiny App\n\nYou can also reach the Shiny App by running the code below in R Console.\n\nshiny::runGitHub(\"pjournal/mef06g-peace-trust\",subdir=\"/project/app.R\",ref = \"gh-pages\")"
   },
   {
     "objectID": "assignment1.html",

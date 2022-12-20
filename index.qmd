@@ -32,4 +32,12 @@ Our group project is **Agriculture in Turkey** - Agriculture in Turkey based on 
   - [Teaser](https://youtu.be/V_GM-XeqMcc) will be added
   - [HTML Format](FinalPresentation.html) will be added
   - [PDF Format](FinalPresentation.pdf) will be added
-- [Shiny App](https://yudum.shinyapps.io/project_shiny_app/) will be added
+  
+- [Shiny App](https://44zj2p-yudum-pa0in.shinyapps.io/project/) 
+
+**You can also reach the Shiny App by running the code below in R Console.**
+```{r eval=FALSE}
+shiny::runGitHub("pjournal/mef06g-peace-trust",subdir="/project/app.R",ref = "gh-pages")
+```
+
+

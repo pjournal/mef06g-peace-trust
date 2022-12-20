@@ -2,6 +2,8 @@ library(shiny)
 library(tidyverse)
 library(dplyr)
 library(ggplot2)
+library(DT)
+
 
 # Load data
 tarim <- readRDS("data//tarim.rds")
@@ -10,73 +12,121 @@ sebze <- readRDS("data//sebze.rds")
 tahil <- readRDS("data//tahil.rds")
 regions <- readRDS("data//Regions.rds")
 
+sebze <- sebze %>% 
+  rename(production = 'decare')
+
+tahil <- tahil %>% 
+  rename(production = 'decare')
 
 # Define UI
+
 ui <- fluidPage(
+
+  tags$style(HTML("
+    
+    body {
+      background-color: lightgreen;
+      font-family: sans-serif;
+    }
+    h1, h2 {
+      font-family: serif;
+      color: black;
+    }
+  ")),
+  
+  
   titlePanel("Agricultural Production in Turkey"),
   
+  sidebarLayout(
+    sidebarPanel(
       radioButtons("dataset", label = "Choose Data", 
-                   choices = c("Tarım"=1,"Meyve"=2,"Sebze"=3,"Tahıl"=4), inline = T),
+                   choices = c("Meyve"="meyve","Sebze"="sebze","Tahıl"="tahil","Tarım"="tarim"), inline = T),
       
 
-      selectInput("province", "Province:", sort(unique(meyve$province))),
-      selectInput("main_type", "Main Type:", sort(unique(meyve$main_type))),
-      selectInput("product_name", "Product Name:", sort(unique(meyve$product_name))),
+      selectInput("province", "Select Province:", choices = NULL),
+      selectInput("main_type", "Select Main Type:", choices = NULL),
+      selectInput("product_name", "Select Product Name:", choices = NULL),
+      selectInput("unit", "Select Unit:", choices = NULL),
+    ),
+    mainPanel(
+      plotOutput("lineplot"),
+      DT::dataTableOutput("datatable")
 
-      plotOutput("plot"),
-      # Add data table
-      dataTableOutput("table")
+  )))
 
-  )
-
-server <- function(input, output) {
+server <- function(input, output,session) {
   # Update choices in dropdown box based on selected dataset
-  observe({
-    if (input$dataset == 1) {
-      updateSelectInput(session, "province", choices = names(tarim))
-    } else if (input$dataset == 2) {
-      updateSelectInput(session, "province", choices = names(meyve))
-    } else if (input$dataset == 3) {
-      updateSelectInput(session, "province", choices = names(sebze))
-    } else if (input$dataset == 4) {
-      updateSelectInput(session, "province", choices = names(tahil))
-    } 
+  
+
+  
+  observeEvent(input$dataset, {
+    updateSelectInput(session, "province", choices = unique(eval(parse(text = paste0(input$dataset, "$province")))))
+    updateSelectInput(session, "main_type", choices = unique(eval(parse(text = paste0(input$dataset, "$main_type")))))
+    updateSelectInput(session, "product_name", choices = unique(eval(parse(text = paste0(input$dataset, "$product_name")))))
+    updateSelectInput(session, "unit", choices = unique(eval(parse(text = paste0(input$dataset, "$unit")))))
+
   })
   
-  # Render plot
-  output$plot <- renderPlot({
-    # Use input$dataset to determine which dataset to use
-    if (input$dataset == 1) {
-      data <- tarım
-    } else if (input$dataset == 2) {
-      data <- meyve
-    } else if (input$dataset == 3) {
-      data <- sebze
-    } else if (input$dataset == 4) {
-      data <- tahıl
+  observeEvent(input$dataset, {
+    if (input$dataset %in% c("tarim")) {
+      updateSelectInput(session, "main_type", choices=character(0))
+      updateSelectInput(session, "product_name", choices=character(0))
+      updateSelectInput(session, "unit", choices=character(0))
     } 
+  }) 
+  
+
+  
+  output$lineplot <- renderPlot({
     
-    # Use input$x to determine which variable to plot on the x-axis
-    plot(data[, input$year], main = input$year)
+    if (input$dataset %in% c("meyve","sebze","tahil")) {
+    # Subset the data based on the selected variables
+    plot_data <- subset(eval(parse(text = paste0(input$dataset))),
+                        main_type == input$main_type &
+                          product_name == input$product_name &
+                          unit == input$unit &
+                          province == input$province)
+    
+    # Create the line plot
+    ggplot(plot_data, aes(x = year, y = production)) +
+      geom_line() +
+      xlab("Year")+
+      ylab("Production")+
+      ggtitle(paste(input$province ,"-", input$product_name, "(",input$unit,")" ))
+    }
+    else{
+      # Subset the data based on the selected variables
+      plot_data <- subset(eval(parse(text = paste0(input$dataset))),
+                          
+                            province == input$province)
+      
+      # Create the line plot
+      ggplot(plot_data, aes(x = year, y = decare)) +
+        geom_line() +
+        xlab("Year")+
+        ylab("Decare")+
+        ggtitle(paste("Agricultural Areas (Decare) of ", input$province))
+    }
   })
   
-  # Render data table
-  output$table <- renderDataTable({
-    # Use input$dataset to determine which dataset to display
-    if (input$dataset == 1) {
-      data <- tarim
-    } else if (input$dataset == 2) {
-      data <- meyve
-    } else if (input$dataset == 3) {
-      data <- sebze
-    } else if (input$dataset == 4) {
-      data <- tahil
+  output$datatable <- DT::renderDataTable({
+    if (input$dataset %in% c("meyve","sebze","tahil")) {
+    # Subset the data based on the selected variables
+    table_data <- subset(eval(parse(text = paste0(input$dataset))),
+                         main_type == input$main_type &
+                           product_name == input$product_name &
+                           unit == input$unit &
+                           province == input$province)
+    }
+    else {
+      table_data <- subset(eval(parse(text = paste0(input$dataset))),
+                             province == input$province)
     }
     
-    # Return the selected dataset
-    return(data)
+    # Return the data table
+    table_data
   })
+  
 }
 # Run the app
 shinyApp(ui = ui, server = server)
-           

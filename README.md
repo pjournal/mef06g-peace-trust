@@ -1,5 +1,7 @@
-# gh-pages-quarto-template
+This repository consists of BDA 503 project files of group "Peace and Trust":
 
-A template for Github Pages Quarto Websites for Progress Journals. 
+Projects
 
-Note to students: You might want to change this README file to reflect your work on Github repository.
+* **Agricultural Production in Turkey**
+
+* **Startups 2021**

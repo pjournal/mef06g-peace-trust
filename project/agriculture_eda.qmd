@@ -458,7 +458,7 @@ df <- tarim %>%
 
 
 df_t <- df %>%
-  inner_join(temperature)
+  inner_join(temperature,by = "year")
   
 ggplot(df_t, aes(year)) + 
   geom_line(aes(y = TotalDecareNormalized, colour = "Total Agricultural Area in Decare (1/20000000)")) + 

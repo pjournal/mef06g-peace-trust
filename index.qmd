@@ -28,6 +28,7 @@ Our group project is **Agriculture in Turkey** based on TUIK data
 - [Final Report](https://pjournal.github.io/mef06g-peace-trust/project/report.html)
   
 - [Shiny App](https://44zj2p-yudum-pa0in.shinyapps.io/project/) 
+  - [Shiny Code](https://raw.githubusercontent.com/pjournal/mef06g-peace-trust/main/project/app.R)
 
 **You can also reach the Shiny App by running the code below in R Console.**
 ```{r eval=FALSE}

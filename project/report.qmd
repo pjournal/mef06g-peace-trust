@@ -53,31 +53,16 @@ The raw data is preprocessed in [Data Preprocessing File](https://pjournal.githu
 
 Key takeaways of the report as follows;
 
-**1.** In Turkey, **9.213.278 decare** agricultural areas is lost in last 12 years. However, after 2019 agricultural areas start to increase, interestingly first improvement is in 2020, “the pandemic year” but in general in 12 years, size of the agricultural areas moving downwards. 
+**1.** In Turkey, **9.213.278 decare** agricultural areas is lost in last 12 years, first improvement since 2011 was in 2020, “the pandemic year” but in general in 12 years, size of the agricultural areas moving downwards. 
 
-**2.** When we look at provinces of Turkey, **Şanlıurfa** (2.145.906), **Konya**(2.058.950) and **Sivas**s(1.771.190) lost biggest agricultural areas.In terms of lost rate, **Zonguldak** has the greatest lost, the city lost %35 of its agricultural areas in 12 years.
 
-**3.** When we look at regions of Turkey, **İç Anadolu** had the biggest loses in 2011 and 2017. However İç Anadolu’ total agricultural lands also high as compared to other regions so looking rate of yearly difference would be good indicator to analyze. Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, **“Büyüksehir Yasası”** that enacted in the 2012 can be cause of this situation
+**2.** Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, **“Büyüksehir Yasası”** that enacted in the 2012 can be cause of this situation.
 
-**4.** Distribution of Agricultural Areas in terms of fruit, vegetables and grain is examined. Only first 10 category is displayed, after 10th rank other categories are merged into "Other" category.
+**3.** Yearly Grain/Fruit/Vegetable Production Areas is examined; we find that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production.
 
-  * In fruit category, **Hazelnut** (%20.6) has the biggest area, second is Olive     (For Oil Production), third is Pistachios
+**4.** **Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agricultural area in that year**. We could not observe a clear relation between CO2 emission and agricultural area loss in Turkey. We find out that there is a complex relationship between agricultural loss and CO2 emissions. 
 
-  * In vegetable category, **Tomato** (%13.1) has the biggest area, second is     pumpkin seeds (10.6%), third is Watermelon (8.93%)
 
-  * In grain category, **Wheat** (%33.8) has the biggest area, second is Barley     (18.3%)
-
-**5.** Yearly Grain/Fruit/Vegetable Production Areas is examined; we find that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production.
-
-**6.** Next, we analyze, climate Indicators and changes in agricultural areas. **Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agricultural area in that year**.  We Note that we need further statistical tests to show the relation between, this presentations only shows the raw data. However, we know that higher temperatures can  lead to more frequent and severe droughts, which can reduce crop yields and increase the risk of wildfires and decrease the agricultural areas.
-
-* The Intergovernmental Panel on Climate Change (IPCC) is an international body that assesses the science related to climate change. The IPCC’s Fifth Assessment Report, which was published in 2013, includes a chapter on “Agriculture, Forestry and Other Land Use,” which discusses the impacts of climate change on agriculture. You can find the report here: https://www.ipcc.ch/report/ar5/wg2/
-
-**7.** We could not observe a clear relation between CO2 emission and agricultural area loss in Turkey. We find out that there is a complex relationship between agricultural loss and CO2 emissions. On the one hand, agriculture is a significant contributor to global CO2 emissions, through activities such as the use of fossil fuels for irrigation and transportation, and the cultivation of livestock. Reducing CO2 emissions from agriculture can help mitigate the impacts of climate change and reduce the risk of agricultural loss.
-
-* The Intergovernmental Panel on Climate Change (IPCC) is an international body that assesses the science related to climate change. The IPCC's Fifth Assessment Report, which was published in 2013, includes a chapter on "Agriculture, Forestry and Other Land Use," which discusses the impacts of climate change on agriculture, including the relationship between CO2 emissions and agricultural loss. You can find the report here: https://www.ipcc.ch/report/ar5/wg2/
-
-**8.** Lastly, we look at the most efficient fruit in Turkey, **apple** is the winner first by far in terms of kg per tree, for 12 years.
 
 
 ::: hidecode
@@ -156,10 +141,10 @@ df_1 <- df_1 %>%
 
 head(df_1)
 ```
-If we sort according to rate of difference Ardahan,2014 is the first with 0.79, Kars,2013 and Karabük,2018 are the second and Third in terms of yearly agriculture area lost. 
+If we sort according to rate of difference **Ardahan**,**2014** is the first with **0.44**, Kars,2013 with 0.43 and Karabük,2018 with 0.32 are the second and third in terms of yearly agriculture area lost. 
 ```{r}
 df_1 <- df_1 %>%
-  mutate(difference_rate = round(difference/decare,2))%>%
+  mutate(difference_rate = round(difference/prev_decare,2))%>%
   arrange((difference_rate))
 
 
@@ -255,7 +240,7 @@ df_region_1
 Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, **"Büyüksehir Yasası"** that enacted in the 2012 can be cause of this situation.
 ```{r}
 df_region_1 <- df_region_1 %>% 
-          mutate(difference_rate=round(difference/Total_Agriarea_in_the_Region,2)) %>% 
+          mutate(difference_rate=round(difference/prev_decare,3)) %>% 
                    arrange((difference_rate))
 head(df_region_1)
 ```
@@ -374,6 +359,17 @@ p <- plot_ly(plot_data_g, labels = ~product_name, values = ~TotalbyName, type = 
 p
 ```
 
+Distribution of Agricultural Areas in terms of fruit, vegetables and grain is examined. Only first 10 category is displayed, after 10th rank other categories are merged into "Other" category.
+
+* In fruit category, **Hazelnut** (%20.6) has the biggest area, second is Olive (For Oil Production), third is Pistachios
+
+* In vegetable category, **Tomato** (%13.1) has the biggest area, second is pumpkin seeds (10.6%), third is Watermelon (8.93%)
+
+* In grain category, **Wheat** (%33.8) has the biggest area, second is Barley (18.3%)
+
+
+
+
 ### Yearly Grain/Fruit/Vegetable Production Areas 
 
 Grain production areas were decreasing until 2019, after 2019, it is increasing slightly like agricultural areas
@@ -468,8 +464,8 @@ df <- tarim %>%
 df_t <- df %>%
   inner_join(temperature,by = "year")
   
-ggplot(df_t, aes(year)) + 
-  geom_line(aes(y = TotalDecareNormalized, colour = "Total Agricultural Area in Decare (1/20000000)")) + 
+ggplot(df_t, aes(x=year,y = TotalDecareNormalized, colour = "Total Agricultural Area(1/20000000)")) + 
+  geom_line(aes(y = TotalDecareNormalized, colour = "Total Agricultural Area(1/20000000)")) + 
   geom_line(aes(y = temperature, colour = "Temperature")) +
   ylab(NULL) +
   ggtitle("Average Temperature vs Total Agricultural Area") 
@@ -493,12 +489,14 @@ df_t_c <- df_t %>%
 
 ggplot(df_t_c, aes(year)) + 
   geom_line(aes(y = TotalDecareNormalized, colour = "Total Decare (1/20000000)", group=1)) + 
-  geom_line(aes(y = CO2emissions, colour = "CO2 Emission(Ton Per Capita)", group=2)) +
-  geom_line(aes(y = temperature, colour = "Temperature", group=3)) +
+  geom_line(aes(y = CO2emissions*5, colour = "CO2 Emission(Ton Per Capita)", group=2)) +
   ylab(NULL) +
   ggtitle("Average Temperature, CO2 Emission and Total Agricultural Area in Turkey")  
 
 ```
+We could not observe a clear relation between CO2 emission and agricultural area loss in Turkey. We find out that there is a complex relationship between agricultural loss and CO2 emissions. On the one hand, agriculture is a significant contributor to global CO2 emissions, through activities such as the use of fossil fuels for irrigation and transportation, and the cultivation of livestock. Reducing CO2 emissions from agriculture can help mitigate the impacts of climate change and reduce the risk of agricultural loss.Also, interesingly, carbon emissions— can also help agriculture by enhancing photosynthesis in many important, so-called C3, crops (such as wheat, rice,
+and soybeans)., If there are no beneficial effects from increased carbon dioxide, agricultural output declines almost everywhere and catastrophically closer to the equator.  [!Global Warming and Agriculture, 2008](https://www.imf.org/external/pubs/ft/fandd/2008/03/pdf/cline.pdf)
+
 
 ## Most efficient Fruits in Turkey
 

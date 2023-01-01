@@ -106,13 +106,15 @@ Total_Agricultural_Area <- total_2021_area$TotalArea
 df_province <- tarim %>%
   filter(year==2021)%>%
   group_by(province_code,province) %>%
-  summarise(Agricultural_Area=sum(decare),Total_Agricultural_Area,rate_area=round(Agricultural_Area/Total_Agricultural_Area,2))%>%
-  arrange(desc(rate_area)) 
+  summarise(Agricultural_Area=sum(decare),Total_Agricultural_Area,AgrRatetoTotalAgr=round(Agricultural_Area/Total_Agricultural_Area,2))%>%
+  arrange(desc(AgrRatetoTotalAgr)) 
 
-knitr::kable(head(df_province),caption = "Total Agricultural Areas (in Decare) by Province - 2021")
+knitr::kable(head(df_province,10),caption = "Total Agricultural Areas (in Decare) in Turkey 2021 - Top 10 Province")
 
 ```
 ## Density of Agriculture Areas
+
+Density of Agricultural areas are calculated by dividing province's agricultural area to province's total areas. Total area's of provinces are gathered from [Wikipedia](https://en.wikipedia.org/wiki/Provinces_of_Turkey).
 
 **Kilis** is the most dense city in terms of agricultural areas,
 ```{r}
@@ -120,10 +122,10 @@ turkey_tarim_area_21 = merge(turkey, df_province, by.x = 'Code', by.y = 'provinc
 
 df_area_to_ag <- turkey_tarim_area_21 %>%
   group_by(province) %>%
-  summarise(rate_agricultre_to_area = Agricultural_Area*0.01/Area ,Agricultural_Area) %>%
-  arrange(desc(rate_agricultre_to_area))
+  summarise(Agricultural_Area,Density = Agricultural_Area*0.01/Area ) %>%
+  arrange(desc(Density))
 
-knitr::kable(head(df_area_to_ag),caption = "Density of Agricultural Areas (Agricultural Area/Area) - Top(5)")
+knitr::kable(head(df_area_to_ag,10),caption = "Density of Agricultural Areas (Agricultural Area/Area) in 2021 - Top 10 Province")
 ```
 
 Now, lets plot the agricultural areas of Turkish cities in 2021, both size corresponds to total agricultural areas in 2021 and color corresponds to density of Agricultural Areas.

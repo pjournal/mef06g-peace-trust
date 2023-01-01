@@ -10,7 +10,7 @@ format:
     number-sections: false
 ---
 
-![Tarım](tarim.jpg)
+![](tarim.jpg)
 
 ```{=html}
 <style>
@@ -247,4 +247,11 @@ saveRDS(tahil, file ="data//tahil.rds")
 saveRDS(meyve, file ="data//meyve.rds")
 saveRDS(sebze, file ="data//sebze.rds")
 
+```
+
+#### Save other datasets
+
+```{r}
+turkey = read_excel("data//turkey.xlsx")
+saveRDS(turkey, file = "data//turkey.rds")
 ```

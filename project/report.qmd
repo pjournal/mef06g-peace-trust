@@ -12,7 +12,7 @@ format:
 
 ---
 
-![Tarım](tarim.jpg)
+![](tarim.jpg)
 
 ```{=html}
 <style>
@@ -53,16 +53,14 @@ The raw data is preprocessed in [Data Preprocessing File](https://pjournal.githu
 
 Key takeaways of the report as follows;
 
-**1.** In Turkey, **9.213.278 decare** agricultural areas is lost in last 12 years, first improvement since 2011 was in 2020, “the pandemic year” but in general in 12 years, size of the agricultural areas moving downwards. 
+**1.** According to TUIK agricultural area datas, Konya, Ankara and Şanlıurfa  are top 3 cities having greatest agricultural areas. Konya alone has %8 of agricultural areas of Turkey.Kilis has the most dense agricultural area, comparing to its total area, %7 of the city is agricultural.
 
+**2.** In Turkey, **9.213.278 decare** (9213,28 km2) agricultural areas is lost in last 12 years, first improvement since 2011 was in 2020, “the pandemic year” but in general in 12 years, size of the agricultural areas moving downwards. 
+**3.** Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, **“Büyüksehir Yasası”** that enacted in the 2012 can be cause of this situation
 
-**2.** Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, **“Büyüksehir Yasası”** that enacted in the 2012 can be cause of this situation.
+**4.** Yearly Grain/Fruit/Vegetable Production Areas is examined; we find that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production.
 
-**3.** Yearly Grain/Fruit/Vegetable Production Areas is examined; we find that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production.
-
-**4.** **Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agricultural area in that year**. We could not observe a clear relation between CO2 emission and agricultural area loss in Turkey. We find out that there is a complex relationship between agricultural loss and CO2 emissions. 
-
-
+**5.** **Increase in average temperature in Turkey in 2018, also coincides with the decrease in Agricultural area in that year**. We could not observe a clear relation between CO2 emission and agricultural area loss in Turkey. We find out that there is a complex relationship between agricultural loss and CO2 emissions. 
 
 
 ::: hidecode
@@ -89,10 +87,63 @@ meyve <- readRDS("data//meyve.rds")
 sebze <- readRDS("data//sebze.rds")
 tahil <- readRDS("data//tahil.rds")
 regions <- readRDS("data//Regions.rds")
+turkey <- readRDS("data//turkey.rds")
 ```
 :::
 
+
 ## Total Agriculture Areas 
+
+```{r}
+total_2021_area <- tarim %>%
+  filter(year==2021)%>%
+  group_by(year)%>%
+  summarise(TotalArea=sum(decare))
+
+Total_Agricultural_Area <- total_2021_area$TotalArea
+
+
+df_province <- tarim %>%
+  filter(year==2021)%>%
+  group_by(province_code,province) %>%
+  summarise(Agricultural_Area=sum(decare),Total_Agricultural_Area,rate_area=round(Agricultural_Area/Total_Agricultural_Area,2))%>%
+  arrange(desc(rate_area)) 
+
+knitr::kable(head(df_province),caption = "Total Agricultural Areas (in Decare) by Province - 2021")
+
+```
+## Density of Agriculture Areas
+
+**Kilis** is the most dense city in terms of agricultural areas,
+```{r}
+turkey_tarim_area_21 = merge(turkey, df_province, by.x = 'Code', by.y = 'province_code')
+
+df_area_to_ag <- turkey_tarim_area_21 %>%
+  group_by(province) %>%
+  summarise(rate_agricultre_to_area = Agricultural_Area*0.01/Area ,Agricultural_Area) %>%
+  arrange(desc(rate_agricultre_to_area))
+
+knitr::kable(head(df_area_to_ag),caption = "Density of Agricultural Areas (Agricultural Area/Area) - Top(5)")
+```
+
+Now, lets plot the agricultural areas of Turkish cities in 2021, both size corresponds to total agricultural areas in 2021 and color corresponds to density of Agricultural Areas.
+
+```{r}
+# Plot the Turkey province data
+ggplot(data = turkey_tarim_area_21) +
+  geom_point(aes(x = Longitude, y =Latitude ,
+                 color = -log10((Agricultural_Area*0.01/Area)*100),
+                 size = Agricultural_Area,
+                 label = Name), alpha = 0.6) +
+  scale_size(name = "Agricultural Area",
+             range = c(5, 15)) +
+  theme(legend.position = "up") +
+  labs(x = "longitude",
+       y = "latitude",
+       title = "Turkey: Agricultural Areas") +
+  geom_text(aes(x =Longitude , y =  Latitude, label = Name)) 
+
+```
 
 ### Agriculture areas are shrinking slightly
 
@@ -275,7 +326,7 @@ ggplot(data=df_region_overall,aes(x=region,y=Total_Difference,fill=region))+
 
 meyve_dekar <-
   meyve %>% 
-  filter(year==2021 & unit=='Dekar')
+  filter(year==2021 & unit=='Dekar'  & main_type=='Toplu Meyveliklerin Alanı')
 
 
 total = sum(meyve_dekar[, 'production'],na.rm=TRUE)
@@ -304,7 +355,7 @@ p
 ```{r warning=FALSE}
 
 sebze_df <- sebze %>%
-  filter(year==2021 & unit=='Dekar')
+  filter(year==2021 & unit=='Dekar'  & main_type=='Ekilen Alan')
 
 total = sum(sebze_df [, 'decare'],na.rm=TRUE)
 
@@ -334,7 +385,7 @@ p
 ### Grain
 ```{r warning=FALSE}
 tahil_df <-  tahil %>%
-  filter(year==2021 & unit=='Dekar')
+  filter(year==2021 & unit=='Dekar' & main_type=='Ekilen Alan')
 
 total = sum(tahil_df[, 'decare'],na.rm=TRUE)
 
@@ -365,7 +416,7 @@ Distribution of Agricultural Areas in terms of fruit, vegetables and grain is ex
 
 * In vegetable category, **Tomato** (%13.1) has the biggest area, second is pumpkin seeds (10.6%), third is Watermelon (8.93%)
 
-* In grain category, **Wheat** (%33.8) has the biggest area, second is Barley (18.3%)
+* In grain category, **Wheat** (%31.5) has the biggest area, second is Barley (17.1%)
 
 
 
@@ -376,11 +427,9 @@ Grain production areas were decreasing until 2019, after 2019, it is increasing 
 
 ```{r}
 df_gra <- tahil %>%
-  filter(unit=='Dekar') %>%
+  filter(unit=='Dekar' & main_type=='Ekilen Alan') %>%
   group_by(year)%>%
-  summarize(total_gra_decare = sum(decare, na.rm = TRUE)) %>%
-  mutate(prev_decare = lag(total_gra_decare)) %>%
-  mutate(diff_gra_rate = round((total_gra_decare-prev_decare)/total_gra_decare,2))
+  summarize(total_gra_decare = sum(decare, na.rm = TRUE)) 
 
 ggplot(data=df_gra, aes(x=year, y=total_gra_decare)) + 
   geom_line() +
@@ -394,11 +443,9 @@ Fruit production areas are increasing slightly unlike agricultural areas
 ```{r}
 
 df_meyve <- meyve %>%
-  filter(unit=='Dekar') %>%
+  filter(unit=='Dekar' & main_type=='Toplu Meyveliklerin Alanı') %>%
   group_by(year)%>%
-  summarize(total_gra_decare = sum(production, na.rm = TRUE)) %>%
-  mutate(prev_decare = lag(total_gra_decare)) %>%
-  mutate(diff_gra_rate = round((total_gra_decare-prev_decare)/total_gra_decare,2))
+  summarize(total_gra_decare = sum(production, na.rm = TRUE)) 
 
 ggplot(data=df_meyve, aes(x=year, y=total_gra_decare)) + 
   geom_line() +
@@ -407,11 +454,12 @@ ggplot(data=df_meyve, aes(x=year, y=total_gra_decare)) +
   ggtitle("Total Fruit Agriculture Areas(Decare) Between 2010-2021")
 
 ```
+
 ```{r}
 meyve_sort <- meyve %>% arrange(year)
 
 meyve_analiz <- meyve_sort %>%
-  filter(unit=='Dekar') %>%
+  filter(unit=='Dekar'  & main_type=='Toplu Meyveliklerin Alanı') %>%
   group_by(year,product_name)%>%
   summarize(total_decare = sum(production, na.rm = TRUE)) %>%
   arrange(product_name,year) %>%
@@ -433,11 +481,10 @@ knitr::kable(head(meyve_sort_analiz),caption = "The Top Fruits in Terms of Yearl
 ```{r}
 
 df_sebze <- sebze %>%
-  filter(unit=='Dekar') %>%
+  filter(unit=='Dekar' & main_type=='Ekilen Alan') %>%
   group_by(year)%>%
-  summarize(total_gra_decare = sum(decare, na.rm = TRUE)) %>%
-  mutate(prev_decare = lag(total_gra_decare)) %>%
-  mutate(diff_gra_rate = round((total_gra_decare-prev_decare)/total_gra_decare,2))
+  summarize(total_gra_decare = sum(decare, na.rm = TRUE)) 
+
 
 ggplot(data=df_sebze, aes(x=year, y=total_gra_decare)) + 
   geom_line() +
@@ -446,6 +493,7 @@ ggplot(data=df_sebze, aes(x=year, y=total_gra_decare)) +
   ggtitle("Total Vegetable Agriculture Areas(Decare) Between 2010-2021")
 
 ```
+
 **Above analysis show that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production**
 
 ## Climate Indicators and Agrriculture Areas

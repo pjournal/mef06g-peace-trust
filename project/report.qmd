@@ -361,8 +361,7 @@ sebze_df <- sebze %>%
 
 total = sum(sebze_df [, 'decare'],na.rm=TRUE)
 
-grouped_data <- sebze %>%
-  filter(year==2021 & unit=='Dekar') %>%
+grouped_data <- sebze_df %>%
   group_by(product_name) %>%
   summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%
   mutate(rate = round((TotalbyName/total)*100),4)
@@ -391,7 +390,7 @@ tahil_df <-  tahil %>%
 
 total = sum(tahil_df[, 'decare'],na.rm=TRUE)
 
-grouped_data <- tahil %>%
+grouped_data <- tahil_df %>%
   filter(year==2021 & unit=='Dekar') %>%
   group_by(product_name) %>%
   summarise(TotalbyName = sum(decare,na.rm=TRUE)) %>%

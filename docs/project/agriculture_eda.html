@@ -291,7 +291,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <h2 class="anchored" data-anchor-id="key-takeaways">KEY TAKEAWAYS</h2>
 <p>Key takeaways of the report as follows;</p>
 <ol type="1">
-<li><p>According to TUIK agricultural area datas, Konya, Ankara and Şanlıurfa are top 3 cities having greatest agricultural areas. Konya alone has %8 of agricultural areas of Turkey.Kilis has the most dense agricultural area, comparing to its total area, %7 of the city is agricultural.</p></li>
+<li><p>According to TUIK agricultural area datas, Konya, Ankara and Şanlıurfa are top 3 cities having greatest agricultural areas. Konya alone has %8 of agricultural areas of Turkey. Kilis has the most dense agricultural area, comparing to its total area, %71 of the city is agricultural.</p></li>
 <li><p>In Turkey, <strong>9.213.278 decare</strong> (9213,28 km2) agricultural areas is lost in last 12 years, first improvement since 2011 was in 2020, “the pandemic year” but in general in 12 years, size of the agricultural areas moving downwards.</p></li>
 <li><p>Eastern part of the Turkey loss agricultural land at the highest rate in the first years of decade, <strong>“Büyüksehir Yasası”</strong> that enacted in the 2012 can be cause of this situation</p></li>
 <li><p>Yearly Grain/Fruit/Vegetable Production Areas is examined; we find that, increase in the agricultural areas after 2019 due to fruit (mostly nuts) and grain production.</p></li>
@@ -447,16 +447,16 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(turkey)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code># A tibble: 6 × 7
-  Code  Name              Area Population (2000 census…¹ Popul…² Latit…³ Longi…⁴
-  &lt;chr&gt; &lt;chr&gt;            &lt;dbl&gt;                     &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
-1 1     Adana          1404556                   1854270 2237940    37.0    35.3
-2 2     Adıyaman        760616                    623811  626465    37.8    38.3
-3 3     Afyonkarahisar 1471863                    812416  729483    38.7    30.6
-4 4     Ağrı           1149867                    528744  536199    39.8    43.2
-5 5     Amasya          570378                    365231  337800    40.7    35.8
-6 6     Ankara         2540194                   4007860 5639076    39.9    32.9
-# … with abbreviated variable names ¹​`Population (2000 census)`,
-#   ²​`Population (2019-2020 estimate)`, ³​Latitude, ⁴​Longitude</code></pre>
+  Code  Name             Area `Population (2000 census)` Popul…¹ Latit…² Longi…³
+  &lt;chr&gt; &lt;chr&gt;           &lt;dbl&gt;                      &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;   &lt;dbl&gt;
+1 1     Adana          14046.                    1854270 2237940    37.0    35.3
+2 2     Adıyaman        7606.                     623811  626465    37.8    38.3
+3 3     Afyonkarahisar 14719.                     812416  729483    38.7    30.6
+4 4     Ağrı           11499.                     528744  536199    39.8    43.2
+5 5     Amasya          5704.                     365231  337800    40.7    35.8
+6 6     Ankara         25402.                    4007860 5639076    39.9    32.9
+# … with abbreviated variable names ¹​`Population (2019-2020 estimate)`,
+#   ²​Latitude, ³​Longitude</code></pre>
 </div>
 </div>
 <p>Join the turkey dataframe with turkey_tarim_area_21, Area is in km2 and Total_Province_Area is in Decare,</p>
@@ -464,13 +464,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>turkey_tarim_area_21 <span class="ot">=</span> <span class="fu">merge</span>(turkey, df_province, <span class="at">by.x =</span> <span class="st">'Code'</span>, <span class="at">by.y =</span> <span class="st">'province_code'</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span>(turkey_tarim_area_21)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>  Code      Name    Area Population (2000 census)
-1    1     Adana 1404556                  1854270
-2   10 Balıkesir 1447273                  1076347
-3   11   Bilecik  430677                   194326
-4   12    Bingöl  825351                   253739
-5   13    Bitlis  709450                   388678
-6   14      Bolu  832339                   270654
+<pre><code>  Code      Name     Area Population (2000 census)
+1    1     Adana 14045.56                  1854270
+2   10 Balıkesir 14472.73                  1076347
+3   11   Bilecik  4306.77                   194326
+4   12    Bingöl  8253.51                   253739
+5   13    Bitlis  7094.50                   388678
+6   14      Bolu  8323.39                   270654
   Population (2019-2020 estimate) Latitude Longitude  province
 1                         2237940 36.98636  35.32529     Adana
 2                         1228650 39.54008  28.02288 Balıkesir
@@ -491,7 +491,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="cell">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>df_area_to_ag <span class="ot">&lt;-</span> turkey_tarim_area_21 <span class="sc">%&gt;%</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(province) <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Agricultural_Area,<span class="at">Density =</span> Agricultural_Area<span class="sc">*</span><span class="fl">0.01</span><span class="sc">/</span>Area ) <span class="sc">%&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(Agricultural_Area,<span class="at">Density =</span> Agricultural_Area<span class="sc">*</span><span class="fl">0.001</span><span class="sc">/</span>Area ) <span class="sc">%&gt;%</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(Density))</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(df_area_to_ag,<span class="dv">10</span>),<span class="at">caption =</span> <span class="st">"Density of Agricultural Areas (Agricultural Area/Area) in 2021 - Top 10 Province"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -509,52 +509,52 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <tr class="odd">
 <td style="text-align: left;">Kilis</td>
 <td style="text-align: right;">1017790</td>
-<td style="text-align: right;">0.0712858</td>
+<td style="text-align: right;">0.7128579</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kırıkkale</td>
 <td style="text-align: right;">3082717</td>
-<td style="text-align: right;">0.0674591</td>
+<td style="text-align: right;">0.6745906</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Tekirdağ</td>
 <td style="text-align: right;">4154336</td>
-<td style="text-align: right;">0.0655020</td>
+<td style="text-align: right;">0.6550204</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Nevşehir</td>
 <td style="text-align: right;">3303465</td>
-<td style="text-align: right;">0.0612701</td>
+<td style="text-align: right;">0.6127013</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Edirne</td>
 <td style="text-align: right;">3306122</td>
-<td style="text-align: right;">0.0542173</td>
+<td style="text-align: right;">0.5421730</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Şanlıurfa</td>
 <td style="text-align: right;">10445551</td>
-<td style="text-align: right;">0.0540207</td>
+<td style="text-align: right;">0.5402067</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Gaziantep</td>
 <td style="text-align: right;">3466184</td>
-<td style="text-align: right;">0.0506394</td>
+<td style="text-align: right;">0.5063937</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Kırşehir</td>
 <td style="text-align: right;">3265004</td>
-<td style="text-align: right;">0.0499976</td>
+<td style="text-align: right;">0.4999761</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Aksaray</td>
 <td style="text-align: right;">3843131</td>
-<td style="text-align: right;">0.0482471</td>
+<td style="text-align: right;">0.4824714</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Konya</td>
 <td style="text-align: right;">18710259</td>
-<td style="text-align: right;">0.0458433</td>
+<td style="text-align: right;">0.4584329</td>
 </tr>
 </tbody>
 </table>
@@ -566,7 +566,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract the data we're interested in</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> turkey_tarim_area_21) <span class="sc">+</span></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">x =</span> Longitude, <span class="at">y =</span>Latitude ,</span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="sc">-</span><span class="fu">log10</span>((Agricultural_Area<span class="sc">*</span><span class="fl">0.01</span><span class="sc">/</span>Area)<span class="sc">*</span><span class="dv">100</span>),</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>                 <span class="at">color =</span> <span class="sc">-</span><span class="fu">log10</span>((Agricultural_Area<span class="sc">*</span><span class="fl">0.001</span><span class="sc">/</span>Area)<span class="sc">*</span><span class="dv">100</span>),</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>                 <span class="at">size =</span> Agricultural_Area,</span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>                 <span class="at">label =</span> Name), <span class="at">alpha =</span> <span class="fl">0.6</span>) <span class="sc">+</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size</span>(<span class="at">name =</span> <span class="st">"Agricultural Area"</span>,</span>
@@ -1006,8 +1006,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb34-6"><a href="#cb34-6" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-536cec513e8ae060804c" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-536cec513e8ae060804c">{"x":{"visdat":{"7286e0c3283":["function () ","plotlyVisDat"]},"cur_data":"7286e0c3283","attrs":{"7286e0c3283":{"labels":{},"values":{},"textposition":"outside","textinfo":"label+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Top 10 Fruit Products (in Decare) in Turkey  in 2021","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Other","Other","Other","Other","Other","Other","Other","Other","Çay Yaprakları ","Ceviz ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Fındık ","Other","Other","Other","Other","Other","Kayısı ","Other","Other","Other","Other","Kiraz ","Other","Other","Other","Other","Kurutmalık Üzüm, Çekirdeksiz ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Şam Fıstığı Antep Fıstığı ","Other","Other","Sofralık Üzüm, Çekirdekli ","Other","Sofralık Zeytinler ","Other","Other","Other","Other","Yağlık Zeytinler Zeytinyağı Üretimi İçin ","Other","Other"],"values":[7095,110712,251546,27282,79075,577324,126580,3095,789001,1535204,186761,83915,489021,158915,19999,143006,384501,76823,594754,217077,7389201,50394,2681,205,546975,121,1348794,10776,199573,136132,155122,815468,2612,38844,2990,516433,769699,522333,321550,1788,28451,255406,4197,2214,122864,292013,109666,308396,14454,13285,3894509,568599,391600,1735069,312411,2302531,7174,49519,0,201442,6589146,7412,9712],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textinfo":"label+percent","type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-69d596b3aa699f1707ef" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-69d596b3aa699f1707ef">{"x":{"visdat":{"32a832365d81":["function () ","plotlyVisDat"]},"cur_data":"32a832365d81","attrs":{"32a832365d81":{"labels":{},"values":{},"textposition":"outside","textinfo":"label+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Top 10 Fruit Products (in Decare) in Turkey  in 2021","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Other","Other","Other","Other","Other","Other","Other","Other","Çay Yaprakları ","Ceviz ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Fındık ","Other","Other","Other","Other","Other","Kayısı ","Other","Other","Other","Other","Kiraz ","Other","Other","Other","Other","Kurutmalık Üzüm, Çekirdeksiz ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Şam Fıstığı Antep Fıstığı ","Other","Other","Sofralık Üzüm, Çekirdekli ","Other","Sofralık Zeytinler ","Other","Other","Other","Other","Yağlık Zeytinler Zeytinyağı Üretimi İçin ","Other","Other"],"values":[7095,110712,251546,27282,79075,577324,126580,3095,789001,1535204,186761,83915,489021,158915,19999,143006,384501,76823,594754,217077,7389201,50394,2681,205,546975,121,1348794,10776,199573,136132,155122,815468,2612,38844,2990,516433,769699,522333,321550,1788,28451,255406,4197,2214,122864,292013,109666,308396,14454,13285,3894509,568599,391600,1735069,312411,2302531,7174,49519,0,201442,6589146,7412,9712],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textinfo":"label+percent","type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1037,8 +1037,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb36-6"><a href="#cb36-6" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
 
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-093f5ebf379afa998c36" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-093f5ebf379afa998c36">{"x":{"visdat":{"7287e0e6680":["function () ","plotlyVisDat"]},"cur_data":"7287e0e6680","attrs":{"7287e0e6680":{"labels":{},"values":{},"textposition":"outside","textinfo":"label+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Top 10 Vegetable Products (in Decare) in Turkey  in 2021","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Other","Other","Other","Other","Other","Other","Other","Other","Biber Salçalık, Kapya ","Biber Sivri ","Other","Other","Other","Domates Salçalık ","Domates Sofralık ","Other","Fasulye, Taze ","Other","Hıyar Sofralık ","Other","Other","Kabak Çerezlik ","Other","Other","Karpuz ","Kavun ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Soğan Kuru ","Other","Other","Other","Other","Other"],"values":[23254,43244,36876,48210,70080,116468,23228,123388,377905,277868,17582,50607,12013,581954,1070081,28187,395035,100686,259301,75302,150788,866682,104968,91201,729485,668753,10503,707,3105,65,1391,132115,1417,49400,49317,895,83576,31730,96046,77957,14256,172851,4928,20,67073,18155,902,133710,25060,3823,698972,70697,6975,6372,1433,59269],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textinfo":"label+percent","type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-ba2aa334d82c51e0e894" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-ba2aa334d82c51e0e894">{"x":{"visdat":{"32a86426e":["function () ","plotlyVisDat"]},"cur_data":"32a86426e","attrs":{"32a86426e":{"labels":{},"values":{},"textposition":"outside","textinfo":"label+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Top 10 Vegetable Products (in Decare) in Turkey  in 2021","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Other","Other","Other","Other","Other","Other","Other","Other","Biber Salçalık, Kapya ","Biber Sivri ","Other","Other","Other","Domates Salçalık ","Domates Sofralık ","Other","Fasulye, Taze ","Other","Hıyar Sofralık ","Other","Other","Kabak Çerezlik ","Other","Other","Karpuz ","Kavun ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Soğan Kuru ","Other","Other","Other","Other","Other"],"values":[23254,43244,36876,48210,70080,116468,23228,123388,377905,277868,17582,50607,12013,581954,1070081,28187,395035,100686,259301,75302,150788,866682,104968,91201,729485,668753,10503,707,3105,65,1391,132115,1417,49400,49317,895,83576,31730,96046,77957,14256,172851,4928,20,67073,18155,902,133710,25060,3823,698972,70697,6975,6372,1433,59269],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textinfo":"label+percent","type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
@@ -1067,8 +1067,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <span id="cb38-5"><a href="#cb38-5" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb38-6"><a href="#cb38-6" aria-hidden="true" tabindex="-1"></a>p</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output-display">
-<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-7ad03c1ec6690de99ab2" style="width:100%;height:464px;"></div>
-<script type="application/json" data-for="htmlwidget-7ad03c1ec6690de99ab2">{"x":{"visdat":{"72869281fb6":["function () ","plotlyVisDat"]},"cur_data":"72869281fb6","attrs":{"72869281fb6":{"labels":{},"values":{},"textposition":"outside","textinfo":"label+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Top 10 Grain Products(as Decare) in Turkey in 2021","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Other","Other","Other","Arpa Diğer ","Other","Other","Other","Ayçiçeği Tohumu Yağlık ","Other","Other","Other","Other","Other","Other","Other","Buğday, Durum Buğdayı Hariç ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Durum Buğdayı ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Mısır ","Other","Mısır Slaj ","Other","Other","Nohut, Kuru ","Other","Pamuk Çekirdeği Çiğit ","Pamuk, Çırçırlanmamış Kütlü ","Pamuk, Çırçırlanmış Lifli ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Yonca Yeşilot ","Other","Other"],"values":[1390,9326,1536574,30154431,279422,145882,898415,8113116,19008,8947,15226,268212,6786,12445,150858,55432967,14460,22567,7326,997555,85540,1724042,1294904,13745,14902,12013688,1077964,232176,2094260,24189,747678,81032,810911,41046,516721,516721,13500,5,373275,376017,23766,9603,317,324,10,76,2792,1814737,22122,35810,2601995,481591,7582370,58282,5248424,13867,77133,4878857,534,4322790,4322790,4322790,1389175,193,51,3054051,7624,3185,73,27684,438917,2248,254862,244,939909,468835,831167,72,43172,621,579192,31432,6730474,1369490,3740583],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textinfo":"label+percent","type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<div class="plotly html-widget html-fill-item-overflow-hidden html-fill-item" id="htmlwidget-5641492f48d8dc6fc6a9" style="width:100%;height:464px;"></div>
+<script type="application/json" data-for="htmlwidget-5641492f48d8dc6fc6a9">{"x":{"visdat":{"32a85c1c54d6":["function () ","plotlyVisDat"]},"cur_data":"32a85c1c54d6","attrs":{"32a85c1c54d6":{"labels":{},"values":{},"textposition":"outside","textinfo":"label+percent","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"Top 10 Grain Products(as Decare) in Turkey in 2021","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"modeBarButtonsToAdd":["hoverclosest","hovercompare"],"showSendToCloud":false},"data":[{"labels":["Other","Other","Other","Arpa Diğer ","Other","Other","Other","Ayçiçeği Tohumu Yağlık ","Other","Other","Other","Other","Other","Other","Other","Buğday, Durum Buğdayı Hariç ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Durum Buğdayı ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Mısır ","Other","Mısır Slaj ","Other","Other","Nohut, Kuru ","Other","Pamuk Çekirdeği Çiğit ","Pamuk, Çırçırlanmamış Kütlü ","Pamuk, Çırçırlanmış Lifli ","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Other","Yonca Yeşilot ","Other","Other"],"values":[1390,9326,1536574,30154431,279422,145882,898415,8113116,19008,8947,15226,268212,6786,12445,150858,55432967,14460,22567,7326,997555,85540,1724042,1294904,13745,14902,12013688,1077964,232176,2094260,24189,747678,81032,810911,41046,516721,516721,13500,5,373275,376017,23766,9603,317,324,10,76,2792,1814737,22122,35810,2601995,481591,7582370,58282,5248424,13867,77133,4878857,534,4322790,4322790,4322790,1389175,193,51,3054051,7624,3185,73,27684,438917,2248,254862,244,939909,468835,831167,72,43172,621,579192,31432,6730474,1369490,3740583],"textposition":["outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside","outside"],"textinfo":"label+percent","type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
 </div>
 </div>
 </section>
